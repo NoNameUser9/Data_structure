@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{68F96847-26B3-4A42-8FAC-82BD24254EA9}</ProjectGuid>
+    <ProjectGuid>{FC1CA2B5-0BC2-4D0F-B0AA-868F0C0DBB7F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Data_structure</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stack.h" />
+    <ClInclude Include="swap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
