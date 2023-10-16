@@ -2,41 +2,28 @@
 
 template <typename T>
 // ReSharper disable once CppInconsistentNaming
-class Stack {
-private:
-    struct Node
-    {
-        T data;
-        Node* next;
-
-        explicit Node(const T& value, Node* next = nullptr);
-    };
-
-    Node* topNode;
-
+class Stack
+{
 public:
     Stack();
-
     ~Stack();
-
     void push(const T& value);
-
     void pop();
-
     [[nodiscard]] T& top() const;
-
     [[nodiscard]] bool empty() const;
-
     [[nodiscard]] size_t size() const;
+private:
+    struct node
+    {
+        T data;
+        node* next;
+    };
+
+    node* top_node_;
 };
 
 template <typename T>
-Stack<T>::Node::Node(const T& value, Node* next): data(value), next(next)
-{}
-
-template <typename T>
-Stack<T>::Stack(): topNode(nullptr)
-{}
+Stack<T>::Stack(): top_node_(nullptr){}
 
 template <typename T>
 Stack<T>::~Stack()
@@ -48,36 +35,36 @@ Stack<T>::~Stack()
 template <typename T>
 void Stack<T>::push(const T& value)
 {
-    Node* newNode = new Node(value, topNode);
-    topNode = newNode;
+    node* new_node = new node(value, top_node_);
+    top_node_ = new_node;
 }
 
 template <typename T>
 void Stack<T>::pop()
 {
     if (!empty())
-        topNode = topNode->next;
+        top_node_ = top_node_->next;
 }
 
 template <typename T>
 T& Stack<T>::top() const
 {
     if (!empty())
-        return topNode->data;
+        return top_node_->data;
     throw std::runtime_error("Stack is empty");
 }
 
 template <typename T>
 bool Stack<T>::empty() const
 {
-    return topNode == nullptr;
+    return top_node_ == nullptr;
 }
 
 template <typename T>
 size_t Stack<T>::size() const
 {
     size_t count = 0;
-    Node* current = topNode;
+    node* current = top_node_;
     while (current != nullptr)
     {
         count++;
