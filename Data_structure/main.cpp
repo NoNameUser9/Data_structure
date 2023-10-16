@@ -4,7 +4,7 @@
 #include "deque.h"
 #include "linked_list.h"
 
-typedef int my_type;
+typedef char my_type;
 
 int main(int argc, char* argv[])
 {
