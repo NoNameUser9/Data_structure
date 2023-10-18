@@ -1,14 +1,17 @@
 ﻿#pragma once
+#include <cstdint>
 
 template<class T>
-class LinkedList
+class list  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
-    LinkedList();
-    ~LinkedList();
+    list();
+    ~list();
     void push_front(T value);
     void pop_front();
     void print_list();
+    [[nodiscard]] bool empty() const;
+    [[nodiscard]] uint32_t size() const;
 private:
     struct node
     {
@@ -16,4 +19,5 @@ private:
         node* next;
     };
     node* head_;
+    uint32_t size_;
 };

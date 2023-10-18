@@ -1,56 +1,55 @@
-﻿#include "stack.h"
-
+﻿#include "stack.hpp"
 #include <stdexcept>
 
-template Stack<int>;
-template Stack<float>;
-template Stack<char>;
-template Stack<bool>;
-template Stack<std::string>;
+template stack<int>;
+template stack<float>;
+template stack<char>;
+template stack<bool>;
+template stack<std::string>;
 
 template <class T>
-Stack<T>::Stack(): top_node_(nullptr){}
+stack<T>::stack(): head_(nullptr){}
 
 template <typename T>
-Stack<T>::~Stack()
+stack<T>::~stack()
 {
     while (!empty())
         pop();
 }
 
 template <typename T>
-void Stack<T>::push(const T& value)
+void stack<T>::push(const T& value)
 {
-    node* new_node = new node(value, top_node_);
-    top_node_ = new_node;
+    node* new_node = new node(value, head_);
+    head_ = new_node;
 }
 
 template <typename T>
-void Stack<T>::pop()
+void stack<T>::pop()
 {
     if (!empty())
-        top_node_ = top_node_->next;
+        head_ = head_->next;
 }
 
 template <typename T>
-T& Stack<T>::top() const
+T& stack<T>::top() const
 {
     if (!empty())
-        return top_node_->data;
+        return head_->data;
     throw std::runtime_error("Stack is empty");
 }
 
 template <typename T>
-bool Stack<T>::empty() const
+bool stack<T>::empty() const
 {
-    return top_node_ == nullptr;
+    return head_ == nullptr;
 }
 
 template <typename T>
-size_t Stack<T>::size() const
+uint32_t stack<T>::size() const
 {
     size_t count = 0;
-    node* current = top_node_;
+    node* current = head_;
     while (current != nullptr)
     {
         count++;

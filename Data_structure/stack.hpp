@@ -1,17 +1,17 @@
 ﻿#pragma once
+#include <cstdint>
 
 template <typename T>
-// ReSharper disable once CppInconsistentNaming
-class Stack
+class stack  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
-    Stack();
-    ~Stack();
+    stack();
+    ~stack();
     void push(const T& value);
     void pop();
     [[nodiscard]] T& top() const;
     [[nodiscard]] bool empty() const;
-    [[nodiscard]] size_t size() const;
+    [[nodiscard]] uint32_t size() const;
 private:
     struct node
     {
@@ -19,5 +19,5 @@ private:
         node* next;
     };
 
-    node* top_node_;
+    node* head_;
 };

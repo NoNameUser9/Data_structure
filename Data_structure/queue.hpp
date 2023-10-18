@@ -1,12 +1,14 @@
 ﻿#pragma once
+#include <cstdint>
 
 template<class T>
-class Queue
+class queue  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
-    Queue();
-    ~Queue();
+    queue();
+    ~queue();
     bool empty();
+    [[nodiscard]] uint32_t size() const;
     void enqueue(T value);
     void dequeue();
     T get_front();
@@ -17,5 +19,6 @@ private:
         node* next;
     };
     node* front_;
-    node* rear_;
+    node* back_;
+    uint32_t size_;
 };

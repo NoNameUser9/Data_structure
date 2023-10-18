@@ -92,16 +92,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="deque.cpp" />
-    <ClCompile Include="linked_list.cpp" />
+    <ClCompile Include="list.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.cpp" />
     <ClCompile Include="stack.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="deque.h" />
-    <ClInclude Include="linked_list.h" />
-    <ClInclude Include="queue.h" />
-    <ClInclude Include="stack.h" />
+    <ClInclude Include="deque.hpp" />
+    <ClInclude Include="list.hpp" />
+    <ClInclude Include="queue.hpp" />
+    <ClInclude Include="stack.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,37 +1,37 @@
-﻿#include "deque.h"
+﻿#include "deque.hpp"
 #include <iostream>
 #include <string>
 
-template Deque<int>;
-template Deque<float>;
-template Deque<char>;
-template Deque<bool>;
-template Deque<std::string>;
+template deque<int>;
+template deque<float>;
+template deque<char>;
+template deque<bool>;
+template deque<std::string>;
 
 template <typename T>
-Deque<T>::Deque(): front_(nullptr), back_(nullptr), size_(0){}
+deque<T>::deque(): front_(nullptr), back_(nullptr), size_(0){}
 
 template <typename T>
-Deque<T>::~Deque()
+deque<T>::~deque()
 {
     while (!empty())
         pop_front();
 }
 
 template <typename T>
-bool Deque<T>::empty() const
+bool deque<T>::empty() const
 {
     return size_ == 0;
 }
 
 template <typename T>
-uint32_t Deque<T>::get_size() const
+uint32_t deque<T>::get_size() const
 {
     return size_;
 }
 
 template <typename T>
-void Deque<T>::push_front(const T& value)
+void deque<T>::push_front(const T& value)
 {
     node* new_node = new node;
     new_node->data = value;
@@ -48,7 +48,7 @@ void Deque<T>::push_front(const T& value)
 }
 
 template <typename T>
-void Deque<T>::push_back(const T& value)
+void deque<T>::push_back(const T& value)
 {
     node* new_node = new node;
     new_node->data = value;
@@ -65,7 +65,7 @@ void Deque<T>::push_back(const T& value)
 }
 
 template <typename T>
-void Deque<T>::pop_front()
+void deque<T>::pop_front()
 {
     if (empty())
     {
@@ -86,7 +86,7 @@ void Deque<T>::pop_front()
 }
 
 template <typename T>
-void Deque<T>::pop_back()
+void deque<T>::pop_back()
 {
     if (empty())
     {
@@ -107,7 +107,7 @@ void Deque<T>::pop_back()
 }
 
 template <typename T>
-const T& Deque<T>::get_front() const
+const T& deque<T>::get_front() const
 {
     if (empty())
         throw std::runtime_error("Deque is empty!");
@@ -115,7 +115,7 @@ const T& Deque<T>::get_front() const
 }
 
 template <typename T>
-const T& Deque<T>::get_back() const
+const T& deque<T>::get_back() const
 {
     if (empty())
         throw std::runtime_error("Deque is empty!");

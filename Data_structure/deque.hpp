@@ -2,11 +2,11 @@
 #include <cstdint>
 
 template<typename T>
-class Deque
+class deque  // NOLINT(cppcoreguidelines-special-member-functions)
 {
 public:
-    Deque();
-    ~Deque();
+    deque();
+    ~deque();
     [[nodiscard]] bool empty() const;
     [[nodiscard]] uint32_t get_size() const;
     void push_front(const T& value);

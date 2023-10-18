@@ -1,52 +1,54 @@
-﻿#include "queue.h"
+﻿#include "queue.hpp"
 #include <iostream>
 
-template Queue<int>;
-template Queue<float>;
-template Queue<char>;
-template Queue<bool>;
-template Queue<std::string>;
+template queue<int>;
+template queue<float>;
+template queue<char>;
+template queue<bool>;
+template queue<std::string>;
 
 template <class T>
-Queue<T>::Queue()
-{
-    front_ = nullptr;
-    rear_ = nullptr;
-}
+queue<T>::queue(): front_(nullptr), back_(nullptr), size_(0){}
 
 template <class T>
-Queue<T>::~Queue()
+queue<T>::~queue()
 {
     while (!empty())
         dequeue();
 }
 
 template <class T>
-bool Queue<T>::empty()
+bool queue<T>::empty()
 {
     return front_ == nullptr;
 }
 
 template <class T>
-void Queue<T>::enqueue(T value)
+uint32_t queue<T>::size() const
+{
+    return size_;
+}
+
+template <class T>
+void queue<T>::enqueue(T value)
 {
     node* new_node = new node;
     new_node->data = value;
     new_node->next = nullptr;
         
     if (empty())
-        front_ = rear_ = new_node;
+        front_ = back_ = new_node;
     else
     {
-        rear_->next = new_node;
-        rear_ = new_node;
+        back_->next = new_node;
+        back_ = new_node;
     }
-
+    ++size_;
     std::cout << "Element " << value << " enqueued successfully." << std::endl;
 }
 
 template <class T>
-void Queue<T>::dequeue()
+void queue<T>::dequeue()
 {
     if (empty())
         std::cout << "Queue is empty. Cannot dequeue." << std::endl;
@@ -57,10 +59,11 @@ void Queue<T>::dequeue()
         std::cout << "Element " << temp->data << " dequeued successfully." << std::endl;
         delete temp;
     }
+    --size_;
 }
 
 template <class T>
-T Queue<T>::get_front()
+T queue<T>::get_front()
 {
     if (empty())
         throw std::runtime_error("Queue is empty!");

@@ -1,15 +1,15 @@
 #include <iostream>
-#include "stack.h"
-#include "queue.h"
-#include "deque.h"
-#include "linked_list.h"
+#include "stack.hpp"
+#include "queue.hpp"
+#include "deque.hpp"
+#include "list.hpp"
 
 typedef char my_type;
 
 int main(int argc, char* argv[])
 {
     {
-        Stack<my_type> stack;
+        stack<my_type> stack;
 
         stack.push(10);
         stack.push(20);
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     }
 
     {
-        Queue<my_type> queue;
+        queue<my_type> queue;
 
         queue.enqueue(10);
         queue.enqueue(20);
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     }
     
     {
-        Deque<my_type> deque;
+        deque<my_type> deque;
 
         deque.push_front(1);
         deque.push_back(2);
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     }
 
     {
-        LinkedList<my_type> list;
+        list<my_type> list;
         
         list.push_front(3);
         list.push_front(2);
