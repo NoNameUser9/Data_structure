@@ -61,6 +61,8 @@ int main(int argc, char* argv[])
         list.push_front(3);
         list.push_front(2);
         list.push_front(1);
+
+        list.insert(3, 2);
         
         list.print_list();
         

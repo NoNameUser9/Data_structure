@@ -9,6 +9,7 @@ public:
     ~list();
     void push_front(T value);
     void pop_front();
+    void insert(T value, uint16_t num);
     void print_list();
     [[nodiscard]] bool empty() const;
     [[nodiscard]] uint32_t size() const;

@@ -34,9 +34,21 @@ void list<T>::pop_front()
         std::cout << "Список пуст!" << std::endl;
         return;
     }
-    const node* temp = head_;
+    // const node* temp = head_;
     head_ = head_->next;
-    delete temp;
+    // delete temp;
+}
+
+template <class T>
+void list<T>::insert(T value, const uint16_t num)
+{
+    node* new_node = new node;
+    // node* tmp_node = new node;
+    new_node->data = value;
+    new_node->next = head_;
+    // tmp_node = head_[num - 1];
+    *new_node->next = head_[num - 1];
+    head_[num - 2].next = *new_node;
 }
 
 template <class T>
