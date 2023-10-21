@@ -91,11 +91,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="allocator.cpp" />
+    <ClCompile Include="deque.cpp" />
+    <ClCompile Include="list.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
     <ClInclude Include="stack.h" />
     <ClInclude Include="swap.h" />
+=======
+    <ClInclude Include="allocator.h" />
+    <ClInclude Include="deque.hpp" />
+    <ClInclude Include="list.hpp" />
+    <ClInclude Include="queue.hpp" />
+    <ClInclude Include="stack.hpp" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
