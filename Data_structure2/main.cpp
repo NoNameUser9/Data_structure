@@ -1,28 +1,54 @@
 #include <iostream>
+<<<<<<< Updated upstream
 // #include <stack>
-
+#include "stack.h"
+=======
 #include "stack.hpp"
 #include "queue.hpp"
 #include "deque.hpp"
 #include "list.hpp"
 
 typedef int my_type;
+>>>>>>> Stashed changes
 
 int main(int argc, char* argv[])
 {
-    {
-        stack<my_type> stack;
-        std::cout << "\nbefore:\n";
+    // std::stack<int> cca;
+    // cca.push(5);
+    stack st{};
+    stack st2{};
+    stack st3{};
+    int in[] = {5, 2, 13, 4, 21, 23,12,67,54};
+    // int in2 = 2;
+    // int in3 = 6;
+    // int in4 = 9;
+    st.push(in[0]);
+    st.push(in[1]);
+    st.push(in[2]);
+    st2.push(in[3]);
+    st2.push(in[4]);
+    st3.push(in[5]);
+    st3.push(in[6]);
+    st3.push(in[7]);
+    st3.push(in[8]);
+
+<<<<<<< Updated upstream
+    std::cout << "\nbefore:\n";
+=======
         stack.push(10);
         stack.push(20);
         stack.push(30);
         // stack.emplace(10);
+>>>>>>> Stashed changes
 
-        // st.push(st2.pop());
+    // st.push(st2.pop());
+    while (!st2.empty())
+        st.push(st2.pop());
 
-
-        // while (!st2.empty())
-        //     st.push(st2.pop());
+<<<<<<< Updated upstream
+    // while (!st2.empty())
+    //     st.push(st2.pop());
+=======
         stack.pop();
         stack.pop();
         // stack.pop();
@@ -47,8 +73,22 @@ int main(int argc, char* argv[])
 
         std::cout << "Front element: " << queue.front() << std::endl;
     }
+>>>>>>> Stashed changes
     
+    while (!st3.empty())
+        st.push(st3.pop());
+
+    
+    
+    // auto temp = new int[st.size()];
+    auto size = st.size();
+    // std::cout << "\nsize:" << st.size() << "\n";
+
+    while (!st.empty())
     {
+<<<<<<< Updated upstream
+        std::cout << st.pop() << "\n";
+=======
         deque<my_type> deque;
 
         deque.push_front(1);
@@ -81,7 +121,7 @@ int main(int argc, char* argv[])
         list.pop_front();
         
         // list.print_list();
-
+>>>>>>> Stashed changes
     }
     // std::cout << "\n\nempty: " << st.empty() << "\n\n";
     //

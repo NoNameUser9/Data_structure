@@ -1,23 +1,20 @@
 ﻿#pragma once
-
-template<class T>
-class queue  // NOLINT(cppcoreguidelines-special-member-functions)
+#include "deque.hpp"
+namespace NNU9
 {
-public:
-    queue();
-    ~queue();
-    [[nodiscard]] bool empty() const;
-    [[nodiscard]] size_t size() const;
-    void push(const T& value);
-    void pop();
-    T front();
-    T back();
-protected:
-    struct node
+    template<class T, class Container = deque<T>>
+    class queue  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-        T data;
-        node* next;
+    public:
+        queue();
+        ~queue();
+        [[nodiscard]] bool empty() const;
+        [[nodiscard]] size_t size() const;
+        void push(const T& value);
+        void pop();
+        T front();
+        T back();
+    private:
+        Container container_;
     };
-    node* front_;
-    size_t size_;
-};
+}

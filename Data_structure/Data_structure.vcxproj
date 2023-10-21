@@ -10,9 +10,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="allocator.cpp" />
+    <ClCompile Include="deque.cpp" />
+    <ClCompile Include="list.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="queue.cpp" />
+    <ClCompile Include="stack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="allocator.hpp" />
+    <ClInclude Include="deque.hpp" />
+    <ClInclude Include="list.hpp" />
+    <ClInclude Include="queue.hpp" />
+    <ClInclude Include="stack.hpp" />
+    <ClInclude Include="swap.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{FC1CA2B5-0BC2-4D0F-B0AA-868F0C0DBB7F}</ProjectGuid>
+    <ProjectGuid>{F1BE6B4E-2000-4B45-99AB-2023514F4A23}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Data_structure</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -90,27 +106,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-<<<<<<< Updated upstream
-=======
-    <ClCompile Include="allocator.cpp" />
-    <ClCompile Include="deque.cpp" />
-    <ClCompile Include="list.cpp" />
->>>>>>> Stashed changes
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-<<<<<<< Updated upstream
-    <ClInclude Include="stack.h" />
-    <ClInclude Include="swap.h" />
-=======
-    <ClInclude Include="allocator.h" />
-    <ClInclude Include="deque.hpp" />
-    <ClInclude Include="list.hpp" />
-    <ClInclude Include="queue.hpp" />
-    <ClInclude Include="stack.hpp" />
->>>>>>> Stashed changes
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

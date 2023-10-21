@@ -1,94 +1,52 @@
 ﻿#include "queue.hpp"
 #include <iostream>
-
-template queue<int>;
-template queue<float>;
-template queue<char>;
-template queue<bool>;
-template queue<std::string>;
-
-template <class T>
-queue<T>::queue(): front_(nullptr), size_(0) {}
-
-template <class T>
-queue<T>::~queue() {}
-
-template <class T>
-bool queue<T>::empty() const
+namespace NNU9
 {
-    return size_ == 0;
-}
+    template queue<int>;
+    template queue<float>;
+    template queue<char>;
+    template queue<bool>;
+    template queue<std::string>;
 
-template <class T>
-size_t queue<T>::size() const
-{
-    return size_;
-}
+    template <class T, class Container>
+    queue<T, Container>::queue() {}
 
-template <class T>
-void queue<T>::push(const T& value)
-{
-    node* new_node = new node;
-    new_node->data = value;
-    new_node->next = nullptr;
+    template <class T, class Container>
+    queue<T, Container>::~queue() {}
 
-    if (empty())
-        front_ = new_node;
-    else
-        front_[size_ - 1].next = new_node;
-    
-    size_++;
-}
-
-template <class T>
-void queue<T>::pop()
-{
-    try
+    template <class T, class Container>
+    bool queue<T, Container>::empty() const
     {
-        if(empty())
-            throw std::runtime_error("\nQueue is empty!\n");
+        return container_.empty();
+    }
 
-        if (front_[0].next == nullptr)
-            front_ = nullptr;
-        else
-            front_[size_ - 2].next = nullptr;
-        
-        size_--;
-    }
-    catch (const std::runtime_error& ex)
+    template <class T, class Container>
+    size_t queue<T, Container>::size() const
     {
-        std::cerr << ex.what();
+        return container_.size();
     }
-}
 
-template <class T>
-T queue<T>::front()
-{
-    try
+    template <class T, class Container>
+    void queue<T, Container>::push(const T& value)
     {
-        if (empty())
-            throw std::runtime_error("\nQueue is empty!\n");
-        return front_->data;
+        container_.push_back(value);
     }
-    catch (std::runtime_error& ex)
-    {
-        std::cerr << ex.what();
-    }
-    return {};
-}
 
-template <class T>
-T queue<T>::back()
-{
-    try
+    template <class T, class Container>
+    void queue<T, Container>::pop()
     {
-        if (empty())
-            throw std::runtime_error("\nQueue is empty!\n");
-        return front_[size_ - 1].data;
+        container_.pop_back();
     }
-    catch (std::runtime_error& ex)
+
+    template <class T, class Container>
+    T queue<T, Container>::front()
     {
-        std::cerr << ex.what();
+        return  container_.front();
     }
-    return {};
+
+    template <class T, class Container>
+    T queue<T, Container>::back()
+    {
+        return container_.back();
+    }
 }
