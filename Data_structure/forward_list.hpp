@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include <forward_list>
-
 #include "deque.hpp"
 
 // ReSharper disable once CppInconsistentNaming
@@ -32,14 +30,18 @@ namespace NNU9
         ~list();
         void push_front(const T& value);
         void pop_front();
-        // const_reference at(num& ptr) const;
-        // reference at(num& ptr);
         iterator begin();
         iterator end();
         ref front();
         ref back();
-        void insert(const T& value, const size_t& index);
+        void insert_after(const T& value, const size_t& index);
         void print_list();
+        void sort();
+        /**
+         * \note Not yet implemented!
+         */
+        void unique();
+        void merge(list& list);
         void clear();
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
@@ -48,26 +50,13 @@ namespace NNU9
         public:
             node* ptr;
             iterator();
-
-            iterator(auto begin);
-
-            bool operator==(const iterator& right) const noexcept;
+            explicit iterator(auto begin);
+            
+            bool operator==(const iterator& right) const;
             // ReSharper disable once CppNotAllPathsReturnValue
             ref operator*();
-
             iterator& operator++();
-
             iterator operator++(int);
-            // auto& operator--()
-            // {
-            //     return --pos_now_;
-            // }
-            // auto operator--(int)
-            // {
-            //     auto old = *this;
-            //     operator--();
-            //     return old;
-            // }
         private:
             node* front_;
             node* back_;

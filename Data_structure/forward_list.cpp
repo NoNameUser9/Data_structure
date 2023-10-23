@@ -1,4 +1,5 @@
-﻿#include "forward_list.hpp"
+﻿#include "shell_sort.hpp"
+#include "forward_list.hpp"
 #include <iostream>
 
 namespace NNU9
@@ -10,7 +11,10 @@ namespace NNU9
     template list<std::string>;
     
     template <class T, class Allocator>
-    list<T, Allocator>::list(): front_(new node), back_(front_), size_(0) {}
+    list<T, Allocator>::list(): front_(new node), back_(front_), size_(0)
+    {
+        front_->next = nullptr;
+    }
 
     template <class T, class Allocator>
     list<T, Allocator>::~list()
@@ -26,6 +30,7 @@ namespace NNU9
    
         if(front_ != nullptr)
             new_node->next = front_;
+        
         front_ = new_node;
         ++size_;
     }
@@ -74,14 +79,13 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    void list<T, Allocator>::insert(const T& value, const size_t& index)
+    void list<T, Allocator>::insert_after(const T& value, const size_t& index)
     {
         node* new_node = new node(value);
 
         if (index == 0)
         {
-            new_node->next = front_;
-            front_ = new_node;
+            front_->next = new_node;
             return;
         }
 
@@ -99,8 +103,7 @@ namespace NNU9
             std::cout << "Invalid index!" << std::endl;
             return;
         }
-
-        new_node->next = current->next;
+        
         current->next = new_node;
     }
 
@@ -129,10 +132,31 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
+    void list<T, Allocator>::sort()
+    {
+        shell_sort(*this, 0);
+    }
+
+    template <class T, class Allocator>
+    void list<T, Allocator>::unique()
+    {
+        
+    }
+
+    template <class T, class Allocator>
+    void list<T, Allocator>::merge(list& list)
+    {
+        for (auto it = list.begin(); it != list.end(); ++it)
+            push_front(it.ptr->data);
+    }
+
+    template <class T, class Allocator>
     void list<T, Allocator>::clear()
     {
         while (!empty())
             pop_front();
+
+        size_ = 0;
     }
 
     template <class T, class Allocator>
@@ -162,9 +186,9 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    bool list<T, Allocator>::iterator::operator==(const iterator& right) const noexcept
+    bool list<T, Allocator>::iterator::operator==(const iterator& right) const
     {
-        return this->ptr == right.ptr;
+        return ptr == right.ptr;
     }
 
     template <class T, class Allocator>

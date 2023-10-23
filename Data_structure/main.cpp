@@ -1,7 +1,4 @@
 #include <iostream>
-#include <list>
-#include <vector>
-
 #include "stack.hpp"
 #include "queue.hpp"
 #include "deque.hpp"
@@ -21,12 +18,8 @@ int main(int argc, char* argv[])
         stack.push(30);
         // stack.emplace(10);
 
-
         stack.pop();
         stack.pop();
-        // stack.pop();
-        // stack.pop();
-        // stack.pop();
 
         std::cout << "Size of the stack after popping: " << stack.size() << std::endl;
         std::cout << "Top element after popping: " << stack.top() << std::endl;
@@ -65,10 +58,6 @@ int main(int argc, char* argv[])
         deque.pop_front();
         deque.pop_back();
         std::cout << "\n\n5 elem: " << deque.at(0) << "\n\n";
-        // deque.pop_back();
-        // deque.pop_back();
-        // deque.pop_back();
-        // deque.pop_back();
 
         std::cout << "Size: " << deque.size() << std::endl;
     }
@@ -78,69 +67,32 @@ int main(int argc, char* argv[])
 
         // std::forward_list<my_type> l = {1,2,5,6,2,3,64,4,2,};
         NNU9::list<my_type> list;
-
-        // l.begin();
-        // for (auto it = l.begin(); it != l.end(); ++it)
-            // std::cout << it.;
+        NNU9::list<my_type> list2;
         
-        // NNU9::list<int>::iterator it = list.begin();
         list.push_front(3);
-        list.push_front(2);
+        list.push_front(13);
+        list.push_front(5);
+        list.push_front(53);
         list.push_front(1);
-        std::vector<NNU9::list<my_type>::iterator> iter;
-        // auto it = list.begin();
-        // std::cout << (it == list.end());
-        for (auto it = list.begin(); it != list.end(); ++it)
-            std::cout << "it: " << *it << "\n";
-        // std::forward_list<my_type>::iterator it;
-        // for (it = l.begin(); it != l.end(); ++it)
-        //     std::cout << *it;
-        
-        // list.print_list();
+        list.push_front(12);
+
+        list2.push_front(32);
+        list2.push_front(1);
+        list2.push_front(15);
+        list2.push_front(523);
+        list2.push_front(19);
+        list2.push_front(21);
+
+        list.merge(list2);
+        list.sort();
+        for (const int& it : list)
+            std::cout << "it: " << it << "\n";
+
         
         list.pop_front();
         
-        // list.print_list();
-
+        list.print_list();
     }
-    // std::cout << "\n\nempty: " << st.empty() << "\n\n";
-    //
-    // std::cout << "\n1111111111";
-    // auto temp = new int[st.size()];
-    // std::cout << "size: " << st.size() << "\n";
-    // while (!st.empty())
-    //     temp[st.size() - 1] = st.pop();
-    // for (int i = 0; i < size; ++i)
-    //     std::cout << temp[i] << "\n";
-    // // for (int i = 0; i < size; ++i)
-    // //     st.push(temp[i]);
-    // delete[] temp;
-    
-    //
-    // std::cout << "\nasl;fkskf";
-    // size = st2.size();
-    // temp = new int[st2.size()];
-    // while (!st2.empty())
-    //     temp[st2.size()] = st2.pop();
-    // for (int i = 0; i < size; ++i)
-    //     std::cout << temp[size - i - 1];
-    // for (int i = 0; i < size; ++i)
-    //     st2.push(temp[i]);
-    // delete[] temp;
-    
-    
-    
-    // st.swap(st2);
-    // st.emplace(in[2]);
-    
-    // std::cout << "\nafter:\n";
-    // while (!st.empty())
-    //     std::cout << st.pop();
-    // std::cout << "\n";
-    // while (!st2.empty())
-    //     std::cout << st2.pop();
-    
-    
     
     return 0;
 }
