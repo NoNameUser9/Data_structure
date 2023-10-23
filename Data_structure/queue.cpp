@@ -34,6 +34,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::at(const_size_t_ref pos) const
     {
         try
@@ -41,7 +42,7 @@ namespace NNU9
             if(pos > container_.size())
                 throw std::runtime_error("\nQueue is empty!\n");
             
-            container_.at(pos);
+            return container_.at(pos);
         }
         catch (const std::runtime_error& ex)
         {
@@ -50,6 +51,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::at(const_size_t_ref pos)
     {
         try
@@ -57,7 +59,7 @@ namespace NNU9
             if(pos > container_.size())
                 throw std::runtime_error("\nQueue is empty!\n");
             
-            container_.at(pos);
+            return container_.at(pos);
         }
         catch (const std::runtime_error& ex)
         {
@@ -136,6 +138,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::front()
     {
         try
@@ -143,7 +146,7 @@ namespace NNU9
             if(empty())
                 throw std::runtime_error("\nQueue is empty!\n");
             
-            return  container_.front();
+            return container_.front();
         }
         catch (const std::runtime_error& ex)
         {
@@ -152,6 +155,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::front() const
     {
         try
@@ -159,7 +163,7 @@ namespace NNU9
             if(empty())
                 throw std::runtime_error("\nQueue is empty!\n");
             
-            return  container_.front();
+            return container_.front();
         }
         catch (const std::runtime_error& ex)
         {
@@ -180,6 +184,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::back()
     {
         try
@@ -230,6 +235,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::back() const
     {
         try

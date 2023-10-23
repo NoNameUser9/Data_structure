@@ -11,7 +11,7 @@ namespace NNU9
     template deque<std::string>;
     
     template <class T, class  Allocator>
-    deque<T, Allocator>::deque(): arr_(new T[10]), max_size_(0), size_(0) {}
+    deque<T, Allocator>::deque(): arr_(new T[10]), max_size_(10), size_(0) {}
     
     template <class T, class  Allocator>
     deque<T, Allocator>::~deque()
@@ -45,6 +45,7 @@ namespace NNU9
     }
 
     template <class T, class  Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename deque<T, Allocator>::const_ref deque<T, Allocator>::at(const_size_t_ref pos) const
     {
         try
@@ -61,6 +62,7 @@ namespace NNU9
     }
 
     template <class T, class  Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename deque<T, Allocator>::ref deque<T, Allocator>::at(const_size_t_ref pos)
     {
         try
@@ -302,6 +304,7 @@ namespace NNU9
     }
 
     template <class T, class  Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
     const T& deque<T, Allocator>::back() const
     {
         try
@@ -318,6 +321,7 @@ namespace NNU9
     }
 
     template <typename T, class Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename deque<T, Allocator>::ref deque<T, Allocator>::back()
     {
         try
@@ -334,7 +338,8 @@ namespace NNU9
     }
 
     template <class T, class  Allocator>
-    const T& deque<T, Allocator>::front() const
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename deque<T, Allocator>::const_ref deque<T, Allocator>::front() const
     {
         try
         {
@@ -350,6 +355,7 @@ namespace NNU9
     }
 
     template <typename T, class Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename deque<T, Allocator>::ref deque<T, Allocator>::front()
     {
         try
@@ -366,7 +372,8 @@ namespace NNU9
     }
 
     template <typename T, class Allocator>
-    T& deque<T, Allocator>::operator[](const_size_t_ref pos)
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename deque<T, Allocator>::ref deque<T, Allocator>::operator[](const_size_t_ref pos)
     {
         try
         {
@@ -382,7 +389,8 @@ namespace NNU9
     }
 
     template <typename T, class Allocator>
-    const T& deque<T, Allocator>::operator[](const_size_t_ref pos) const
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename deque<T, Allocator>::const_ref deque<T, Allocator>::operator[](const_size_t_ref pos) const
     {
         try
         {

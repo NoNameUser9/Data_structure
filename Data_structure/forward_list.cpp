@@ -10,18 +10,24 @@ namespace NNU9
     template list<std::string>;
     
     template <class T, class Allocator>
-    list<T, Allocator>::list(): front_(nullptr), back_(nullptr), size_(0) {}
+    list<T, Allocator>::list(): front_(new node), back_(front_), size_(0) {}
 
     template <class T, class Allocator>
-    list<T, Allocator>::~list() {}
+    list<T, Allocator>::~list()
+    {
+        delete[] front_;
+    }
 
     template <class T, class Allocator>
     void list<T, Allocator>::push_front(const_ref value)
     {
         auto new_node = new node;
         new_node->data = value;
-        new_node->next = front_;
+   
+        if(front_ != nullptr)
+            new_node->next = front_;
         front_ = new_node;
+        ++size_;
     }
 
     template <class T, class Allocator>
@@ -42,9 +48,17 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    T list<T, Allocator>::begin()
+    typename list<T, Allocator>::iterator list<T, Allocator>::begin()
     {
-        return 0;
+        iterator ret(front_);
+        return ret;
+    }
+
+    template <class T, class Allocator>
+    typename list<T, Allocator>::iterator list<T, Allocator>::end()
+    {
+        iterator ret(back_);
+        return ret;
     }
 
     template <class T, class Allocator>
@@ -131,5 +145,80 @@ namespace NNU9
     size_t list<T, Allocator>::size() const
     {
         return size_;
+    }
+
+    template <class T, class Allocator>
+    list<T, Allocator>::iterator::iterator(): ptr(nullptr), front_(nullptr), back_(nullptr), pos_now_(0)
+    {}
+
+    template <class T, class Allocator>
+    list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), front_(begin), pos_now_(0)
+    {
+        node* temp = front_;
+        while (temp->next != nullptr)
+            temp = temp->next;
+
+        back_ = temp;
+    }
+
+    template <class T, class Allocator>
+    bool list<T, Allocator>::iterator::operator==(const iterator& right) const noexcept
+    {
+        return this->ptr == right.ptr;
+    }
+
+    template <class T, class Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename list<T, Allocator>::ref list<T, Allocator>::iterator::operator*()
+    {
+        try
+        {
+            if(ptr == nullptr)
+                throw std::runtime_error("\nOut of range!\n");
+                    
+            return ptr->data;
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename list<T, Allocator>::iterator& list<T, Allocator>::iterator::operator++()
+    {
+        try
+        {
+            if(ptr->next == nullptr)
+                throw std::runtime_error("\nOut of range!(operator++ preincrement)\n");
+
+            ++pos_now_;
+            ptr = ptr->next;
+            return *this;
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Allocator>
+    // ReSharper disable once CppNotAllPathsReturnValue
+    typename list<T, Allocator>::iterator list<T, Allocator>::iterator::operator++(int)
+    {
+        try
+        {
+            if(ptr->next == nullptr)
+                throw std::runtime_error("\nOut of range!(operator++ postincrement)\n");
+                    
+            auto old = *this;
+            ++ptr;
+            return old;
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
     }
 }

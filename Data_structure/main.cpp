@@ -1,5 +1,7 @@
 #include <iostream>
 #include <list>
+#include <vector>
+
 #include "stack.hpp"
 #include "queue.hpp"
 #include "deque.hpp"
@@ -12,7 +14,7 @@ int main(int argc, char* argv[])
 
     {
         NNU9::stack<my_type> stack;
-        std::cout << "\nbefore:\n";
+        std::cout << "\nStack:\n\n";
 
         stack.push(10);
         stack.push(20);
@@ -31,6 +33,8 @@ int main(int argc, char* argv[])
     }
 
     {
+        std::cout << "\nQueue:\n\n";
+
         NNU9::queue<my_type> queue;
 
         queue.push(10);
@@ -46,6 +50,8 @@ int main(int argc, char* argv[])
     }
     
     {
+        std::cout << "\nDeque:\n\n";
+
         NNU9::deque<my_type> deque;
 
 
@@ -68,16 +74,27 @@ int main(int argc, char* argv[])
     }
 
     {
-        std::list<my_type> l;
+        std::cout << "\nList:\n\n";
+
+        // std::forward_list<my_type> l = {1,2,5,6,2,3,64,4,2,};
         NNU9::list<my_type> list;
 
         // l.begin();
         // for (auto it = l.begin(); it != l.end(); ++it)
             // std::cout << it.;
         
+        // NNU9::list<int>::iterator it = list.begin();
         list.push_front(3);
         list.push_front(2);
         list.push_front(1);
+        std::vector<NNU9::list<my_type>::iterator> iter;
+        // auto it = list.begin();
+        // std::cout << (it == list.end());
+        for (auto it = list.begin(); it != list.end(); ++it)
+            std::cout << "it: " << *it << "\n";
+        // std::forward_list<my_type>::iterator it;
+        // for (it = l.begin(); it != l.end(); ++it)
+        //     std::cout << *it;
         
         // list.print_list();
         

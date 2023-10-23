@@ -48,6 +48,7 @@ namespace NNU9
     }
 
     template <class T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::ref stack<T, Container>::top()
     {
         try
@@ -64,6 +65,7 @@ namespace NNU9
     }
 
     template <typename T, class Container>
+    // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::const_ref stack<T, Container>::top() const
     {
         try

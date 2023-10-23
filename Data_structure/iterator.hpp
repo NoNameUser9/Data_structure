@@ -12,7 +12,7 @@ namespace NNU9
     public:
         using ref = uint64_t&;
 
-        iterator(size_t size, uint64_t pos_now, uint64_t* arr)
+        iterator(const size_t size, const uint64_t pos_now, uint64_t* arr)
             : size_(size), pos_now_(pos_now), arr_(arr) {}
 
         [[nodiscard]] ref begin() const
@@ -24,7 +24,7 @@ namespace NNU9
         {
             return arr_[size_ - 1];
         }
-        iterator& operator=(const list<int>&);
+        iterator& operator=(const iterator&);
     private:
         size_t size_;
         uint64_t pos_now_;
