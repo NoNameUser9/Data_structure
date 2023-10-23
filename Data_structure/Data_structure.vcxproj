@@ -10,6 +10,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="allocator.cpp" />
+    <ClCompile Include="deque.cpp" />
+    <ClCompile Include="forward_list.cpp" />
+    <ClCompile Include="iterator.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="queue.cpp" />
+    <ClCompile Include="stack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="allocator.hpp" />
+    <ClInclude Include="deque.hpp" />
+    <ClInclude Include="forward_list.hpp" />
+    <ClInclude Include="iterator.hpp" />
+    <ClInclude Include="queue.hpp" />
+    <ClInclude Include="stack.hpp" />
+    <ClInclude Include="swap.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{68F96847-26B3-4A42-8FAC-82BD24254EA9}</ProjectGuid>
@@ -90,19 +108,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="deque.cpp" />
-    <ClCompile Include="list.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="queue.cpp" />
-    <ClCompile Include="stack.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="deque.hpp" />
-    <ClInclude Include="list.hpp" />
-    <ClInclude Include="queue.hpp" />
-    <ClInclude Include="stack.hpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

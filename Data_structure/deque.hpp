@@ -1,29 +1,44 @@
 ﻿#pragma once
-#include <cstdint>
+#include "allocator.hpp"
 
-template<typename T>
-class deque  // NOLINT(cppcoreguidelines-special-member-functions)
+namespace NNU9
 {
-public:
-    deque();
-    ~deque();
-    [[nodiscard]] bool empty() const;
-    [[nodiscard]] uint32_t get_size() const;
-    void push_front(const T& value);
-    void push_back(const T& value);
-    void pop_front();
-    void pop_back();
-    [[nodiscard]] const T& get_front() const;
-    [[nodiscard]] const T& get_back() const;
-private:
-    struct node
+    template<typename T, class Allocator = allocator<T>>
+    class deque  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-        T data;
-        node* prev;
-        node* next;
+    public:
+        using ref = T&;
+        using const_ref = const T&;
+        using const_size_t_ref = const size_t&;
+        // using num = const unsigned long long;
+        deque();
+        ~deque();
+        [[nodiscard]] bool empty() const;
+        [[nodiscard]] size_t size() const;
+        [[nodiscard]] size_t max_size() const;
+        const_ref at(const_size_t_ref pos) const;
+        ref at(const_size_t_ref pos);
+        void push_back(const_ref value);
+        void push_front(const_ref value);
+        void pop_back();
+        void pop_front();
+        void insert(const_size_t_ref pos, const_ref value);
+        void swap(deque& other) noexcept;
+        void resize(const_size_t_ref size);
+        void shrink_to_fit();
+        void erase(const_size_t_ref pos);
+        void erase(const_size_t_ref first, const_size_t_ref last );
+        void clear();
+        [[nodiscard]] const_ref back() const;
+        [[nodiscard]] ref back();
+        [[nodiscard]] const_ref front() const;
+        [[nodiscard]] ref front();
+        ref operator[](const_size_t_ref pos);
+        const_ref operator[](const_size_t_ref pos) const;
+    private:
+        T* arr_;
+        Allocator alloc_;
+        size_t max_size_;
+        size_t size_;
     };
-
-    node* front_;
-    node* back_;
-    uint32_t size_;
-};
+}

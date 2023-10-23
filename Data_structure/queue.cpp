@@ -1,72 +1,247 @@
 ﻿#include "queue.hpp"
 #include <iostream>
 
-template queue<int>;
-template queue<float>;
-template queue<char>;
-template queue<bool>;
-template queue<std::string>;
-
-template <class T>
-queue<T>::queue(): front_(nullptr), back_(nullptr), size_(0){}
-
-template <class T>
-queue<T>::~queue()
+namespace NNU9
 {
-    while (!empty())
-        dequeue();
-}
+    template queue<int>;
+    template queue<float>;
+    template queue<char>;
+    template queue<bool>;
+    template queue<std::string>;
 
-template <class T>
-bool queue<T>::empty()
-{
-    return front_ == nullptr;
-}
+    template <class T, class Container>
+    queue<T, Container>::queue() {}
 
-template <class T>
-uint32_t queue<T>::size() const
-{
-    return size_;
-}
+    template <class T, class Container>
+    queue<T, Container>::~queue() {}
 
-template <class T>
-void queue<T>::enqueue(T value)
-{
-    node* new_node = new node;
-    new_node->data = value;
-    new_node->next = nullptr;
+    template <class T, class Container>
+    bool queue<T, Container>::empty() const
+    {
+        return container_.empty();
+    }
+
+    template <class T, class Container>
+    size_t queue<T, Container>::size() const
+    {
+        return container_.size();
+    }
+
+    template <class T, class Container>
+    size_t queue<T, Container>::max_size() const
+    {
+        return container_.max_size();
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::const_ref queue<T, Container>::at(const_size_t_ref pos) const
+    {
+        try
+        {
+            if(pos > container_.size())
+                throw std::runtime_error("\nQueue is empty!\n");
+            
+            container_.at(pos);
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::ref queue<T, Container>::at(const_size_t_ref pos)
+    {
+        try
+        {
+            if(pos > container_.size())
+                throw std::runtime_error("\nQueue is empty!\n");
+            
+            container_.at(pos);
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::push(const_ref value)
+    {
+        try
+        {
+            if(container_.max_size() == container_.size())
+                throw std::runtime_error("\nQueue is full!\n");
+            
+            container_.push_front(value);
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::pop()
+    {
+        try
+        {
+            if(container_.max_size() == container_.size())
+                throw std::runtime_error("\nQueue is empty!\n");
+            
+            container_.pop_front();
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::insert(const_size_t_ref pos, const_ref value)
+    {
+        try
+        {
+            if(container_.size() == container_.max_size())
+                throw std::runtime_error("\nQueue is full!\n");
         
-    if (empty())
-        front_ = back_ = new_node;
-    else
-    {
-        back_->next = new_node;
-        back_ = new_node;
+            container_.insert(pos, value);
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
     }
-    ++size_;
-    std::cout << "Element " << value << " enqueued successfully." << std::endl;
-}
 
-template <class T>
-void queue<T>::dequeue()
-{
-    if (empty())
-        std::cout << "Queue is empty. Cannot dequeue." << std::endl;
-    else
+    template <class T, class Container>
+    void queue<T, Container>::swap(Container& other) noexcept
     {
-        node* temp = front_;
-        front_ = front_->next;
-        std::cout << "Element " << temp->data << " dequeued successfully." << std::endl;
-        delete temp;
+        container_.swap(other);
     }
-    --size_;
-}
 
-template <class T>
-T queue<T>::get_front()
-{
-    if (empty())
-        throw std::runtime_error("Queue is empty!");
+    template <class T, class Container>
+    void queue<T, Container>::resize(const_size_t_ref size)
+    {
+        try
+        {
+            if(size < container_.size())
+                throw std::runtime_error("\nQueue has a queue bigger then a new size!\n");
 
-    return front_->data;
+            container_.resize(size);
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::ref queue<T, Container>::front()
+    {
+        try
+        {
+            if(empty())
+                throw std::runtime_error("\nQueue is empty!\n");
+            
+            return  container_.front();
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::const_ref queue<T, Container>::front() const
+    {
+        try
+        {
+            if(empty())
+                throw std::runtime_error("\nQueue is empty!\n");
+            
+            return  container_.front();
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::ref queue<T, Container>::operator[](const_size_t_ref pos)
+    {
+        return container_[pos];
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::const_ref queue<T, Container>::operator[](const_size_t_ref pos) const
+    {
+        return container_[pos];
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::ref queue<T, Container>::back()
+    {
+        try
+        {
+            if(empty())
+                throw std::runtime_error("\nQueue is empty!\n");
+
+            return container_.back();
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::shrink_to_fit()
+    {
+        try
+        {
+            if(container_.size() == 0)
+                throw std::runtime_error("\nDeque is empty!\n");
+        
+            container_.shrink_to_fit();
+        }
+        catch (std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::erase(const_size_t_ref pos)
+    {
+        container_.erase(pos);
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::erase(const_size_t_ref first, const_size_t_ref last)
+    {
+        container_.erase(first, last);
+    }
+
+    template <class T, class Container>
+    void queue<T, Container>::clear()
+    {
+        container_.clear();
+    }
+
+    template <class T, class Container>
+    typename queue<T, Container>::const_ref queue<T, Container>::back() const
+    {
+        try
+        {
+            if(empty())
+                throw std::runtime_error("\nQueue is empty!\n");
+
+            return container_.back();
+        }
+        catch (const std::runtime_error& ex)
+        {
+            std::cerr << ex.what();
+        }
+    }
 }

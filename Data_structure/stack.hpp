@@ -1,23 +1,25 @@
 ﻿#pragma once
-#include <cstdint>
+#include "deque.hpp"
 
-template <typename T>
-class stack  // NOLINT(cppcoreguidelines-special-member-functions)
+namespace NNU9
 {
-public:
-    stack();
-    ~stack();
-    void push(const T& value);
-    void pop();
-    [[nodiscard]] T& top() const;
-    [[nodiscard]] bool empty() const;
-    [[nodiscard]] uint32_t size() const;
-private:
-    struct node
+    template <typename T, class Container = deque<T>>
+    class stack  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-        T data;
-        node* next;
+    public:
+        using ref = T&;
+        using const_ref = const T&;
+        using const_size_t_ref = const size_t&;
+        stack();
+        ~stack();
+        void push(const_ref value);
+        void pop();
+        [[nodiscard]] ref top();
+        [[nodiscard]] const_ref top() const;
+        [[nodiscard]] bool empty() const;
+        [[nodiscard]] size_t size() const;
+        void swap(Container& other) noexcept;
+    private:
+        Container container_;
     };
-
-    node* head_;
-};
+}
