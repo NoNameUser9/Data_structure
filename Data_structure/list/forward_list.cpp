@@ -1,4 +1,4 @@
-﻿#include "shell_sort.hpp"
+﻿#include "../shell_sort.hpp"
 #include "forward_list.hpp"
 #include <iostream>
 
@@ -9,28 +9,31 @@ namespace NNU9
     template list<char>;
     template list<bool>;
     template list<std::string>;
-    
+
     template <class T, class Allocator>
-    list<T, Allocator>::list(): front_(new node), back_(front_), size_(0)
-    {
-        front_->next = nullptr;
-    }
+    list<T, Allocator>::list(): front_(nullptr), back_(front_), size_(0) {}
 
     template <class T, class Allocator>
     list<T, Allocator>::~list()
     {
-        delete[] front_;
+        clear();
     }
 
     template <class T, class Allocator>
     void list<T, Allocator>::push_front(const_ref value)
     {
-        auto new_node = new node;
-        new_node->data = value;
-   
-        if(front_ != nullptr)
-            new_node->next = front_;
-        
+        auto new_node = new node{value, nullptr};
+
+        if (size_ == 0)
+        {
+            std::cout << "\nfront: \n" << front_;
+            front_ = new_node;
+            back_ = front_;
+            ++size_;
+            return;
+        }
+
+        new_node->next = front_;
         front_ = new_node;
         ++size_;
     }
@@ -40,10 +43,13 @@ namespace NNU9
     {
         try
         {
-            if(empty())
+            if (empty())
                 throw std::runtime_error("\nList is empty!\n");
-            
+
+            const node* pop_node = front_;
             front_ = front_->next;
+            delete pop_node;
+
             --size_;
         }
         catch (std::runtime_error& ex)
@@ -62,7 +68,7 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::end()
     {
-        iterator ret(back_);
+        iterator ret(back_->next);
         return ret;
     }
 
@@ -78,33 +84,47 @@ namespace NNU9
         return back_->data;
     }
 
+    /**
+     * \brief 
+     * \param value element which will be inserted
+     * \param index index of element after which will be inserted the new element
+     */
     template <class T, class Allocator>
     void list<T, Allocator>::insert_after(const T& value, const size_t& index)
     {
-        node* new_node = new node(value);
-
-        if (index == 0)
+        try
         {
-            front_->next = new_node;
-            return;
+            node* new_node = new node(value, nullptr);
+
+            auto it = begin();
+
+            for (size_t count = 0; it.ptr->next != nullptr && count < index; ++it, ++count)
+
+                if (it.ptr == nullptr)
+                    throw std::runtime_error("\ninsert_after(nullptr)!\n");
+
+            if (it.ptr->next == nullptr)
+            {
+                it.ptr->next = new_node;
+                back_ = it.ptr->next;
+                ++size_;
+                return;
+            }
+
+            node* after_insert_node = it.ptr->next;
+            new_node->next = after_insert_node;
+            it.ptr->next = new_node;
+
+            ++size_;
         }
-
-        node* current = front_;
-        int count = 0;
-
-        while (current != nullptr && count < index - 1)
+        catch (std::runtime_error& ex)
         {
-            current = current->next;
-            count++;
+            std::cerr << ex.what();
         }
-
-        if (current == nullptr)
+        catch (...)
         {
-            std::cout << "Invalid index!" << std::endl;
-            return;
+            std::cerr << "\ninsert_after() error!\n";
         }
-        
-        current->next = new_node;
     }
 
     template <class T, class Allocator>
@@ -112,23 +132,16 @@ namespace NNU9
     {
         try
         {
-            if(empty())
+            if (empty())
                 throw std::runtime_error("\nList is empty!\n");
-            
-            auto temp_node = new node;
-            temp_node = front_;
-            
-            while (temp_node->next != nullptr)
-            {
-                std::cout << temp_node->data;
-                temp_node = temp_node->next;
-            }
+
+            for (auto& it : *this)
+                std::cout << "it: " << it << "\n";
         }
         catch (std::runtime_error& ex)
         {
             std::cerr << ex.what();
         }
-        
     }
 
     template <class T, class Allocator>
@@ -137,10 +150,12 @@ namespace NNU9
         shell_sort(*this, 0);
     }
 
+    /**
+     * \note Not yet realized!
+     */
     template <class T, class Allocator>
     void list<T, Allocator>::unique()
     {
-        
     }
 
     template <class T, class Allocator>
@@ -155,8 +170,6 @@ namespace NNU9
     {
         while (!empty())
             pop_front();
-
-        size_ = 0;
     }
 
     template <class T, class Allocator>
@@ -173,16 +186,14 @@ namespace NNU9
 
     template <class T, class Allocator>
     list<T, Allocator>::iterator::iterator(): ptr(nullptr), front_(nullptr), back_(nullptr), pos_now_(0)
-    {}
+    {
+    }
 
     template <class T, class Allocator>
-    list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), front_(begin), pos_now_(0)
+    list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), front_(begin), back_(begin), pos_now_(0)
     {
-        node* temp = front_;
-        while (temp->next != nullptr)
-            temp = temp->next;
-
-        back_ = temp;
+        while (back_ != nullptr)
+            back_ = back_->next;
     }
 
     template <class T, class Allocator>
@@ -197,9 +208,9 @@ namespace NNU9
     {
         try
         {
-            if(ptr == nullptr)
+            if (ptr == nullptr)
                 throw std::runtime_error("\nOut of range!\n");
-                    
+
             return ptr->data;
         }
         catch (std::runtime_error& ex)
@@ -214,7 +225,7 @@ namespace NNU9
     {
         try
         {
-            if(ptr->next == nullptr)
+            if (ptr == nullptr)
                 throw std::runtime_error("\nOut of range!(operator++ preincrement)\n");
 
             ++pos_now_;
@@ -233,9 +244,9 @@ namespace NNU9
     {
         try
         {
-            if(ptr->next == nullptr)
+            if (ptr == nullptr)
                 throw std::runtime_error("\nOut of range!(operator++ postincrement)\n");
-                    
+
             auto old = *this;
             ++ptr;
             return old;

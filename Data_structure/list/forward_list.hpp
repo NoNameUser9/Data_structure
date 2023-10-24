@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "deque.hpp"
+#include "../allocator.hpp"
 
 // ReSharper disable once CppInconsistentNaming
 namespace NNU9
@@ -60,7 +60,7 @@ namespace NNU9
         private:
             node* front_;
             node* back_;
-            uint64_t pos_now_;
+            size_t pos_now_;
         };
     };
 }

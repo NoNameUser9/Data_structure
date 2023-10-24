@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "allocator.hpp"
+#include "../allocator.hpp"
 
 namespace NNU9
 {

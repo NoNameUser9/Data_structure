@@ -1,5 +1,5 @@
 ﻿#include "deque.hpp"
-#include "swap.hpp"
+#include "../swap.hpp"
 #include <iostream>
 
 namespace NNU9
@@ -11,7 +11,7 @@ namespace NNU9
     template deque<std::string>;
     
     template <class T, class  Allocator>
-    deque<T, Allocator>::deque(): arr_(new T[10]), max_size_(10), size_(0) {}
+    deque<T, Allocator>::deque(): arr_(new T[SIZE]{}), max_size_(10), size_(0) {}
     
     template <class T, class  Allocator>
     deque<T, Allocator>::~deque()
@@ -86,8 +86,7 @@ namespace NNU9
             if(size_ == max_size_)
                 throw std::runtime_error("\nDeque is full!\n");
             
-            arr_[size_] =  value;
-            ++size_;
+            arr_[size_++] = value;
         }
         catch (std::runtime_error& ex)
         {
@@ -103,20 +102,11 @@ namespace NNU9
             if(size_ == max_size_)
                 throw std::runtime_error("\nDeque is full!\n");
             
-            const auto temp = new T[size_];
             for (size_t i = 0; i < size_; ++i)
-                temp[i] = arr_[i];
-            
-            alloc_.deallocate(arr_);
-            arr_ = alloc_.allocate(max_size_);
-            
+                arr_[size_ - i] = arr_[size_ - i - 1];
             arr_[0] = value;
-            for (size_t i = 0; i < size_; ++i)
-                arr_[i + 1] = temp[i];
             
             ++size_;
-
-            delete[] temp;
         }
         catch (std::runtime_error& ex)
         {
@@ -149,19 +139,13 @@ namespace NNU9
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
             
-            const auto temp = new T[max_size_];
-            for (size_t i = 0; i < size_; ++i)
-                temp[i] = arr_[i];
+            if(size_ == max_size_)
+                arr_[size_ - 1] = static_cast<T>(0);
             
-            alloc_.deallocate(arr_);
-            arr_ = alloc_.allocate(max_size_);
-
             for (size_t i = 0; i < size_; ++i)
-                arr_[i] = temp[i + 1];
+                arr_[i] = arr_[i + 1];
             
             --size_;
-
-            delete[] temp;
         }
         catch (std::runtime_error& ex)
         {
@@ -176,16 +160,10 @@ namespace NNU9
         {
             if(size_ == max_size_)
                 throw std::runtime_error("\nDeque is full!\n");
-            
-            const auto temp = new T[size_];
-            for (size_t i = 0; i < size_; ++i)
-                temp[i] = arr_[i];
 
+            for (size_t i = size_; i > pos; --i)
+                arr_[i] = arr_[i - 1];
             arr_[pos] = value;
-            for (size_t i = pos + 1; i < size_; ++i)
-                arr_[i] = temp[i - 1];
-
-            delete[] temp;
         }
         catch (std::runtime_error& ex)
         {
@@ -212,10 +190,16 @@ namespace NNU9
             auto temp = new T[size_];
             for (size_t i = 0; i < size_; ++i)
                     temp[i] = arr_[i];
+
+            alloc_.deallocate(arr_);
+            arr_ = alloc_.allocate(size_);
             
             for (size_t i = 0; i < size_; ++i)
-                arr_[i] = temp[i - 1];
+                arr_[i] = temp[i];
+            
             max_size_ = size;
+
+            delete[] temp;
         }
         catch (std::runtime_error& ex)
         {
@@ -233,18 +217,7 @@ namespace NNU9
             
             max_size_ = size_;
             
-            const auto temp = new T[max_size_];
-            for (size_t i = 0; i < size_; ++i)
-                temp[i] = arr_[i];
-            
-            alloc_.deallocate(arr_);
-
-            arr_ = alloc_.allocate(max_size_);
-            
-            for (size_t i = 0; i < size_; ++i)
-                arr_[i] = temp[i];
-
-            delete[] temp;
+            resize(size_);
         }
         catch (std::runtime_error& ex)
         {
@@ -260,17 +233,11 @@ namespace NNU9
             if(empty())
                 throw std::runtime_error("\nDeque is empty!\n");
             
-            const auto temp = new T[size_];
-            for (size_t i = 0; i < size_; ++i)
-                temp[i] = arr_[i];
+            if (size_ == max_size_)
+                arr_[size_ - 1] = static_cast<T>(0);
             
-            for (size_t i = 0; i < pos - 1; ++i)
-                arr_[i] = temp[i + 1];
-            
-            for (size_t i = pos; i < --size_; ++i)
-                arr_[i] = temp[i + 1];
-
-            delete[] temp;
+            for (size_t i = pos; i < size_--; ++i)
+                arr_[i] = arr_[i + 1];
         }
         catch (std::runtime_error& ex)
         {
@@ -305,7 +272,7 @@ namespace NNU9
 
     template <class T, class  Allocator>
     // ReSharper disable once CppNotAllPathsReturnValue
-    const T& deque<T, Allocator>::back() const
+    typename deque<T, Allocator>::const_ref deque<T, Allocator>::back() const
     {
         try
         {

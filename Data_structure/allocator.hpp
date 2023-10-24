@@ -1,19 +1,16 @@
 ﻿#pragma once
-#include <cstdint>
-#define SIZE 10
+#define SIZE 10  // NOLINT(modernize-macro-to-enum)
 
 namespace NNU9
 {
     template <class  T>
     class allocator {
     public:
-        // Конструкторы и деструктор
         allocator() noexcept;
         template <typename U>
         explicit allocator(const allocator<U>&) noexcept;
         ~allocator() noexcept;
         
-        // Методы, необходимые для аллокации и освобождения памяти
         [[nodiscard]] static constexpr T* allocate(const size_t& n);
         [[nodiscard]] static constexpr T* append(size_t& n, const size_t& add);
         [[nodiscard]] static constexpr T* shrink(size_t& n, const size_t& remove);

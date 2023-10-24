@@ -1,14 +1,13 @@
 #include <iostream>
-#include "stack.hpp"
-#include "queue.hpp"
-#include "deque.hpp"
-#include "forward_list.hpp"
+#include "deque_generic/stack.hpp"
+#include "deque_generic/queue.hpp"
+#include "deque_generic/deque.hpp"
+#include "list/forward_list.hpp"
 
 typedef int my_type;
 
 int main(int argc, char* argv[])
 {
-
     {
         NNU9::stack<my_type> stack;
         std::cout << "\nStack:\n\n";
@@ -44,9 +43,7 @@ int main(int argc, char* argv[])
     
     {
         std::cout << "\nDeque:\n\n";
-
         NNU9::deque<my_type> deque;
-
 
         deque.push_front(1);
         deque.push_back(2);
@@ -57,15 +54,14 @@ int main(int argc, char* argv[])
 
         deque.pop_front();
         deque.pop_back();
+        
         std::cout << "\n\n5 elem: " << deque.at(0) << "\n\n";
-
         std::cout << "Size: " << deque.size() << std::endl;
     }
 
     {
         std::cout << "\nList:\n\n";
 
-        // std::forward_list<my_type> l = {1,2,5,6,2,3,64,4,2,};
         NNU9::list<my_type> list;
         NNU9::list<my_type> list2;
         
@@ -85,12 +81,17 @@ int main(int argc, char* argv[])
 
         list.merge(list2);
         list.sort();
+        list.insert_after(315, 11);
+        std::cout << "\nsize: " << list.size() << "\n";
         for (const int& it : list)
             std::cout << "it: " << it << "\n";
 
+        // list.sort();
+        std::cout << "\nsize: " << list.size() << "\n";
+        std::cout << "\nback: " << list.back() << "\n\n";
         
-        list.pop_front();
-        
+        list.print_list();
+        list.clear();
         list.print_list();
     }
     
