@@ -8,7 +8,6 @@ namespace NNU9
     public:
         using ptr = T*;
         using value_type = T;
-        // using pointer = T*;
         using const_ptr = const T*;
         using size_type = size_t;
         allocator() noexcept;
@@ -19,7 +18,6 @@ namespace NNU9
         [[nodiscard]] static constexpr ptr allocate(const size_t& n);
         static constexpr void append(size_t& n, const size_t& add, ptr Ptr);
         [[nodiscard]] static constexpr ptr shrink(size_t& n, const size_t& remove);
-        // void test_max_size(const size_t& min, size_t& now, const size_t& max, ptr Ptr);
         static constexpr void deallocate(T* p);
 
     };
@@ -36,7 +34,6 @@ namespace NNU9
         n += add;
         deallocate(Ptr);
         Ptr = allocate(n);
-        // return static_cast<T>(operator new(n * sizeof(T)));
     }
 
     template <typename T>
@@ -49,7 +46,7 @@ namespace NNU9
     template <typename T>
     constexpr void allocator<T>::deallocate(ptr p)
     {
-        // ::operator delete(p);
+        ::operator delete(p);
     }
 
     template <typename T>
@@ -61,11 +58,4 @@ namespace NNU9
 
     template <typename T>
     allocator<T>::~allocator() noexcept {}
-
-    // template <class T>
-    // void allocator<T>::test_max_size(const size_t& min, size_t& now, const size_t& max, ptr Ptr)
-    // {
-    //     if(now == min)
-    //         append(now, max - now, Ptr);
-    // }
 }
