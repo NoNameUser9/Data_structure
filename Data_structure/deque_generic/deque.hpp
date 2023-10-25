@@ -36,8 +36,10 @@ namespace NNU9
         ref operator[](const_size_t_ref pos);
         const_ref operator[](const_size_t_ref pos) const;
     private:
+        size_t incremented_times_ = 0;
         T* arr_;
         Allocator alloc_;
+        size_t max_size_for_all_;
         size_t max_size_;
         size_t size_;
     };

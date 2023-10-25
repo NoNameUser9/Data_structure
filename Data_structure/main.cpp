@@ -1,8 +1,10 @@
+#include <algorithm>
 #include <iostream>
 #include "deque_generic/stack.hpp"
 #include "deque_generic/queue.hpp"
 #include "deque_generic/deque.hpp"
 #include "list/forward_list.hpp"
+#include "binary_search.hpp"
 
 typedef int my_type;
 
@@ -36,7 +38,7 @@ int main(int argc, char* argv[])
         std::cout << "Front element: " << queue.front() << std::endl;
 
         queue.pop();
-        queue.pop();
+        // queue.pop();
 
         std::cout << "Front element: " << queue.front() << std::endl;
     }
@@ -55,7 +57,7 @@ int main(int argc, char* argv[])
         deque.pop_front();
         deque.pop_back();
         
-        std::cout << "\n\n5 elem: " << deque.at(0) << "\n\n";
+        std::cout << "\n\n0 elem: " << deque.at(0) << "\n\n";
         std::cout << "Size: " << deque.size() << std::endl;
     }
 
@@ -86,13 +88,33 @@ int main(int argc, char* argv[])
         for (const int& it : list)
             std::cout << "it: " << it << "\n";
 
-        // list.sort();
+        list.sort();
         std::cout << "\nsize: " << list.size() << "\n";
         std::cout << "\nback: " << list.back() << "\n\n";
         
         list.print_list();
         list.clear();
         list.print_list();
+    }
+
+    {
+        NNU9::list<my_type> list;
+        list.push_front(5);
+        list.push_front(7);
+        list.push_front(52);
+        list.push_front(1245);
+        list.push_front(58);
+        list.push_front(543);
+        list.push_front(543);
+        list.push_front(53);
+        list.push_front(43);
+        list.push_front(7543);
+        list.sort();
+        list.print_list();
+        const int arr[10] = {1,3,5,6,7,9,11,13,25,26};
+ 
+        list.print_list();
+        std::cout << "\nbinary_search(): " << binary_search<my_type>(list,5);
     }
     
     return 0;

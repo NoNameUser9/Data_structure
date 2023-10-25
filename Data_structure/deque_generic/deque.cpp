@@ -11,13 +11,18 @@ namespace NNU9
     template deque<std::string>;
     
     template <class T, class  Allocator>
-    deque<T, Allocator>::deque(): arr_(new T[SIZE]{}), max_size_(10), size_(0) {}
-    
+    deque<T, Allocator>::deque(): arr_(new T[SIZE]{}), max_size_(SIZE), max_size_for_all_(SIZE), size_(0){}
+
     template <class T, class  Allocator>
     deque<T, Allocator>::~deque()
     {
         try
         {
+            // std::cout << "\ndestructor\n";
+            if(incremented_times_ > 0)
+                for (auto i = incremented_times_; i != 0; --i)
+                    --arr_;
+
             alloc_.deallocate(arr_);
         }
         catch (std::runtime_error& ex)
@@ -83,9 +88,23 @@ namespace NNU9
     {
         try
         {
-            if(size_ == max_size_)
+            if(size_ == max_size_for_all_)
                 throw std::runtime_error("\nDeque is full!\n");
+
+            if (size_ + 1 == max_size_)
+            {
+                auto temp = new T[size_];
+                for (auto i = 0; i < size_; ++i)
+                    temp[i] = arr_[i];
+
+                alloc_.deallocate(arr_);
+                arr_ = alloc_.allocate(max_size_for_all_);
+                max_size_ = max_size_for_all_;
             
+                for (size_t i = 0; i < size_; ++i)
+                    arr_[i] = temp[i];
+            }
+
             arr_[size_++] = value;
         }
         catch (std::runtime_error& ex)
@@ -99,14 +118,27 @@ namespace NNU9
     {
         try
         {
-            if(size_ == max_size_)
+            if(size_ == max_size_for_all_)
                 throw std::runtime_error("\nDeque is full!\n");
             
+            auto temp = new T[size_];
+            for (auto i = 0; i < size_; ++i)
+                temp[i] = arr_[i];
+            
+            if(incremented_times_ > 0)
+                for (auto i = incremented_times_; i != 0; --i)
+                    --arr_;
+            
+            alloc_.deallocate(arr_);
+            arr_ = alloc_.allocate(max_size_for_all_);
+            max_size_ = max_size_for_all_;
+            
             for (size_t i = 0; i < size_; ++i)
-                arr_[size_ - i] = arr_[size_ - i - 1];
+                arr_[i + 1] = temp[i];
             arr_[0] = value;
             
             ++size_;
+            delete[] temp;
         }
         catch (std::runtime_error& ex)
         {
@@ -121,7 +153,8 @@ namespace NNU9
         {
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
-            
+
+            // std::cout << "\npopped back\n";
             arr_[--size_] = static_cast<T>(0);
         }
         catch (std::runtime_error& ex)
@@ -139,12 +172,27 @@ namespace NNU9
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
             
-            if(size_ == max_size_)
-                arr_[size_ - 1] = static_cast<T>(0);
-            
-            for (size_t i = 0; i < size_; ++i)
-                arr_[i] = arr_[i + 1];
-            
+            // if(size_ == max_size_)
+            //     arr_[size_ - 1] = static_cast<T>(0);
+
+            // T* temp = *arr_[0];
+            // std::cout << "\n" << arr_;
+            // std::cout << "\n" << arr_[0];
+            ++arr_;
+            ++incremented_times_;
+            // delete --arr_;
+            // std::cout << "\narr_ deleted\n";
+
+            // std::cout << "\npopped front\n";
+            // std::cout << arr_;
+            // std::cout << "\n" << arr_[0];
+
+
+            // alloc_.test_max_size(size_, max_size_, max_size_for_all_, arr_);
+            // for (size_t i = 0; i < size_; ++i)
+            //     arr_[i] = arr_[i + 1];
+            // delete temp;
+            --max_size_;
             --size_;
         }
         catch (std::runtime_error& ex)
@@ -312,7 +360,9 @@ namespace NNU9
         {
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
-            
+
+            // std::cout << "\nfront elem\n";
+
             return arr_[0];
         }
         catch (std::runtime_error& ex)

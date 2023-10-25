@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <iostream>
+
 #include "../allocator.hpp"
 
 // ReSharper disable once CppInconsistentNaming
@@ -28,10 +30,13 @@ namespace NNU9
         using const_ref = const T&;
         list();
         ~list();
-        void push_front(const T& value);
+        void push_front(const_ref value);
+        void push_front(ref value);
         void pop_front();
         iterator begin();
+        iterator begin() const;
         iterator end();
+        iterator end() const;
         ref front();
         ref back();
         void insert_after(const T& value, const size_t& index);
@@ -45,22 +50,25 @@ namespace NNU9
         void clear();
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
+        ref operator[](size_t index);
+        // list<T>&& operator=(list&);
         class iterator
         {
         public:
             node* ptr;
             iterator();
             explicit iterator(auto begin);
+            ~iterator(){};
             
             bool operator==(const iterator& right) const;
             // ReSharper disable once CppNotAllPathsReturnValue
             ref operator*();
             iterator& operator++();
             iterator operator++(int);
+            size_t pos_now_;
         private:
             node* front_;
             node* back_;
-            size_t pos_now_;
         };
     };
 }

@@ -1,51 +1,55 @@
 ﻿#pragma once
-#define SIZE 10  // NOLINT(modernize-macro-to-enum)
+#define SIZE 50  // NOLINT(modernize-macro-to-enum)
 
 namespace NNU9
 {
     template <class  T>
     class allocator {
     public:
+        using ptr = T*;
+        using value_type = T;
+        // using pointer = T*;
+        using const_ptr = const T*;
+        using size_type = size_t;
         allocator() noexcept;
         template <typename U>
         explicit allocator(const allocator<U>&) noexcept;
         ~allocator() noexcept;
         
-        [[nodiscard]] static constexpr T* allocate(const size_t& n);
-        [[nodiscard]] static constexpr T* append(size_t& n, const size_t& add);
-        [[nodiscard]] static constexpr T* shrink(size_t& n, const size_t& remove);
+        [[nodiscard]] static constexpr ptr allocate(const size_t& n);
+        static constexpr void append(size_t& n, const size_t& add, ptr Ptr);
+        [[nodiscard]] static constexpr ptr shrink(size_t& n, const size_t& remove);
+        // void test_max_size(const size_t& min, size_t& now, const size_t& max, ptr Ptr);
         static constexpr void deallocate(T* p);
 
-        using value_type = T;
-        using pointer = T*;
-        using const_pointer = const T*;
-        using size_type = size_t;
     };
 
     template <typename T>
-    constexpr T* allocator<T>::allocate(const size_t& n)
+    constexpr typename allocator<T>::ptr allocator<T>::allocate(const size_t& n)
     {
         return static_cast<T*>(operator new(n * sizeof(T)));
     }
 
     template <typename T>
-    constexpr T* allocator<T>::append(size_t& n, const size_t& add)
+    constexpr void allocator<T>::append(size_t& n, const size_t& add, ptr Ptr)
     {
         n += add;
-        return static_cast<T>(operator new(n * sizeof(T)));
+        deallocate(Ptr);
+        Ptr = allocate(n);
+        // return static_cast<T>(operator new(n * sizeof(T)));
     }
 
     template <typename T>
-    constexpr T* allocator<T>::shrink(size_t& n, const size_t& remove)
+    constexpr typename allocator<T>::ptr allocator<T>::shrink(size_t& n, const size_t& remove)
     {
         n -= remove;
         return static_cast<T>(operator new(n * sizeof(T)));
     }
 
     template <typename T>
-    constexpr void allocator<T>::deallocate(T* p)
+    constexpr void allocator<T>::deallocate(ptr p)
     {
-        ::operator delete[](p);
+        // ::operator delete(p);
     }
 
     template <typename T>
@@ -57,4 +61,11 @@ namespace NNU9
 
     template <typename T>
     allocator<T>::~allocator() noexcept {}
+
+    // template <class T>
+    // void allocator<T>::test_max_size(const size_t& min, size_t& now, const size_t& max, ptr Ptr)
+    // {
+    //     if(now == min)
+    //         append(now, max - now, Ptr);
+    // }
 }
