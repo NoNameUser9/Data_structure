@@ -10,7 +10,6 @@ namespace NNU9
         using ref = T&;
         using const_ref = const T&;
         using const_size_t_ref = const size_t&;
-        // using num = const unsigned long long;
         deque();
         ~deque();
         [[nodiscard]] bool empty() const;

@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include <iostream>
-
 #include "../allocator.hpp"
 
 // ReSharper disable once CppInconsistentNaming
@@ -14,7 +12,6 @@ namespace NNU9
     template<class T, class Allocator = allocator<T>>
     class list  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-    private:
         struct node
         {
             T data;
@@ -51,14 +48,14 @@ namespace NNU9
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
         ref operator[](size_t index);
-        // list<T>&& operator=(list&);
+        
         class iterator
         {
         public:
             node* ptr;
             iterator();
             explicit iterator(auto begin);
-            ~iterator(){};
+            ~iterator(){}
             
             bool operator==(const iterator& right) const;
             // ReSharper disable once CppNotAllPathsReturnValue

@@ -2,7 +2,6 @@
 #include "list/forward_list.hpp"
 
 // ReSharper disable once CppNotAllPathsReturnValue
-// template<class T>
 template<class T>
 size_t binary_search(NNU9::list<T>& list, T find)
 {
@@ -12,7 +11,6 @@ size_t binary_search(NNU9::list<T>& list, T find)
         size_t begin = 0, end = size, i = size / 2;
         while (list[i] != find && end - begin != 1)
         {
-            // std::cout << list[i];
             if(find < list[i])
             {
                 end = (end - begin) / 2 + begin;

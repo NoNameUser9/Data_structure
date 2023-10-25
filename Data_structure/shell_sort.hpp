@@ -3,7 +3,7 @@
 #include "swap.hpp"
 
 template<class T>
-void shell_sort(NNU9::list<T>& a, const bool& to_low)
+void shell_sort(NNU9::list<T>& a)
 {
     auto range = static_cast<double>(a.size());
 
@@ -36,8 +36,4 @@ void shell_sort(NNU9::list<T>& a, const bool& to_low)
             range /= factor;
         }
         delete[] temp;
-    
-    
-    // if(to_low == true)
-    //     tolow(a, a.size());
 }

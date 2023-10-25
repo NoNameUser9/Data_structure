@@ -26,7 +26,6 @@ namespace NNU9
 
         if (size_ == 0)
         {
-            // std::cout << "\nfront: \n" << front_;
             front_ = new_node;
             back_ = front_;
             ++size_;
@@ -51,8 +50,8 @@ namespace NNU9
         {
             if (empty())
                 throw std::runtime_error("\nList is empty!\n");
-            
-            node* pop_node = front_;
+
+            const node* pop_node = front_;
             front_ = front_->next;
             delete pop_node;
 
@@ -165,7 +164,7 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::sort()
     {
-        shell_sort(*this, 0);
+        shell_sort(*this);
     }
 
     /**
@@ -203,42 +202,12 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    typename list<T, Allocator>::ref list<T, Allocator>::operator[](size_t index)
+    typename list<T, Allocator>::ref list<T, Allocator>::operator[](const size_t index)
     {
         auto it = begin();
-        for(size_t count = 0; it != end() && count < index; ++it, ++count);
-        // std::cout << '\n' << it.pos_now_ << '\n';
+        for(size_t count = 0; it != end() && count < index; ++it, ++count) {}
         return it.ptr->data;
     }
-
-    // template <class T, class Allocator>
-    // list<T>& list<T, Allocator>::operator=(list& l)
-    // {
-    //     for (auto it = l.begin(); it != l.end(); ++it)
-    //         push_front(it.ptr->data);
-    //     list<T> temp;
-    //     for (auto it = begin(); it != end(); ++it)
-    //         temp.push_front(it.ptr->data);
-    //     clear();
-    //     for (auto it = temp.begin(); it != temp.end(); ++it)
-    //         push_front(it.ptr->data);
-    //
-    //     return *this;
-    // }
-
-    // template <class T, class Allocator>
-    // list<T, Allocator>& list<T, Allocator>::operator=(list& l) const
-    // {
-    //     
-    //     for (auto it = l.begin(); it != l.end(); ++it)
-    //         push_front(it.ptr->data);
-    //     list<T> temp;
-    //     for (auto it = begin(); it != end(); ++it)
-    //         temp.push_front(it.ptr->data);
-    //     clear();
-    //     for (auto it = temp.begin(); it != temp.end(); ++it)
-    //         push_front(it.ptr->data);
-    // }
 
     template <class T, class Allocator>
     list<T, Allocator>::iterator::iterator(): ptr(nullptr), front_(nullptr), back_(nullptr), pos_now_(0)
@@ -312,6 +281,4 @@ namespace NNU9
             std::cerr << ex.what();
         }
     }
-
-    
 }

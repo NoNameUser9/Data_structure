@@ -18,7 +18,6 @@ namespace NNU9
     {
         try
         {
-            // std::cout << "\ndestructor\n";
             if(incremented_times_ > 0)
                 for (auto i = incremented_times_; i != 0; --i)
                     --arr_;
@@ -154,7 +153,6 @@ namespace NNU9
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
 
-            // std::cout << "\npopped back\n";
             arr_[--size_] = static_cast<T>(0);
         }
         catch (std::runtime_error& ex)
@@ -171,27 +169,10 @@ namespace NNU9
         {
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
-            
-            // if(size_ == max_size_)
-            //     arr_[size_ - 1] = static_cast<T>(0);
 
-            // T* temp = *arr_[0];
-            // std::cout << "\n" << arr_;
-            // std::cout << "\n" << arr_[0];
             ++arr_;
             ++incremented_times_;
-            // delete --arr_;
-            // std::cout << "\narr_ deleted\n";
 
-            // std::cout << "\npopped front\n";
-            // std::cout << arr_;
-            // std::cout << "\n" << arr_[0];
-
-
-            // alloc_.test_max_size(size_, max_size_, max_size_for_all_, arr_);
-            // for (size_t i = 0; i < size_; ++i)
-            //     arr_[i] = arr_[i + 1];
-            // delete temp;
             --max_size_;
             --size_;
         }
@@ -360,8 +341,6 @@ namespace NNU9
         {
             if (empty())
                 throw std::runtime_error("\nDeque is empty!\n");
-
-            // std::cout << "\nfront elem\n";
 
             return arr_[0];
         }

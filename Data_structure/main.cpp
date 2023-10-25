@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iostream>
 #include "deque_generic/stack.hpp"
 #include "deque_generic/queue.hpp"
