@@ -60,73 +60,63 @@ int main(int argc, char* argv[])
         std::cout << "Size: " << deque.size() << std::endl;
     }
 
-    // {
-    //     std::cout << "\nList:\n\n";
-    //
-    //     NNU9::list<my_type> list;
-    //     NNU9::list<my_type> list2;
-    //     
-    //     list.push_front(3);
-    //     list.push_front(13);
-    //     list.push_front(5);
-    //     list.push_front(53);
-    //     list.push_front(1);
-    //     list.push_front(12);
-    //
-    //     list2.push_front(32);
-    //     list2.push_front(1);
-    //     list2.push_front(15);
-    //     list2.push_front(523);
-    //     list2.push_front(19);
-    //     list2.push_front(21);
-    //
-    //     list.merge(list2);
-    //     list.sort();
-    //     list.insert_after(315, 11);
-    //     std::cout << "\nsize: " << list.size() << "\n";
-    //     for (const int& it : list)
-    //         std::cout << "it: " << it << "\n";
-    //
-    //     list.sort();
-    //     std::cout << "\nsize: " << list.size() << "\n";
-    //     std::cout << "\nback: " << list.back() << "\n\n";
-    //     
-    //     list.print_list();
-    //     list.clear();
-    //     list.print_list();
-    // }
-
     {
+        std::cout << "\nList:\n\n";
+    
         NNU9::list<my_type> list;
-        list.push_front(5);
-        list.push_front(7);
-        list.push_front(52);
-        list.push_front(1245);
-        list.push_front(58);
-        list.push_front(543);
-        list.push_front(543);
-        list.push_front(53);
-        list.push_front(43);
-        list.push_front(43);
-        list.push_front(43);
-        list.push_front(43);
-        list.push_front(7543);
-        list.print_list();
-        std::cout << "\nsize: " << list.size() << '\n';
-        list.unique();
-        std::cout << "\n\n";
-        list.print_list();
-        std::cout << "\nsize: " << list.size() << '\n';
-        list.sort();
-        // const int arr[10] = {1,3,5,6,7,9,11,13,25,26};
- 
-        list.print_list();
-        NNU9::list<my_type> list3;
-        list3 = list;
-        list3.print_list();
+        NNU9::list<my_type> list2;
         
-        // std::cout << "\nbinary_search(): " << binary_search<my_type>(list,5);
+        list.push_front(3);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+        list.push_front(13);
+
+        list.push_front(5);
+        list.push_front(53);
+        list.push_front(1);
+        list.push_front(12);
+    
+        list2.push_front(32);
+        list2.push_front(32);
+        list2.push_front(32);
+        list2.push_front(1);
+        list2.push_front(15);
+        list2.push_front(523);
+        list2.push_front(19);
+        list2.push_front(21);
+    
+        list.merge(list2);
+        list.sort();
+        list.insert_after(315, 11);
+        std::cout << "\nsize: " << list.size() << "\n";
+        for (const int& it : list)
+            std::cout << "it: " << it << "\n";
+    
+        list.sort();
+        std::cout << "\nsize: " << list.size() << "\n";
+        std::cout << "\nback: " << list.back() << "\n\n";
+
+        list.print_list();
+        std::cout << '\n';
+        list.unique();
+        std::cout << binary_search(list, 156516);
+        std::cout << '\n';
+        list.print_list();
+        list.clear();
+        list.print_list();
     }
+
     
     return 0;
 }

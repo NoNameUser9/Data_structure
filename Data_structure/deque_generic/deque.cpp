@@ -1,5 +1,5 @@
 ﻿#include "deque.hpp"
-#include "../swap.hpp"
+#include "../supporting_finctions/swap.hpp"
 #include <iostream>
 
 namespace NNU9

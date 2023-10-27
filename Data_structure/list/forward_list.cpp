@@ -1,5 +1,6 @@
-﻿#include "../shell_sort.hpp"
-#include "forward_list.hpp"
+﻿#include "forward_list.hpp"
+#include "../supporting_finctions/shell_sort.hpp"
+#include "../supporting_finctions/unique_idx.hpp"
 #include <iostream>
 
 namespace NNU9
@@ -173,8 +174,8 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::unique()
     {
-        node** ptr_ptr_node = new node*[size_]{{nullptr}};
-        const auto idx_ptr_ptr_node = new size_t[size_];
+        node** ptr_ptr_node = new node*[size_];
+        const auto idx_ptr_ptr_node = new size_t[size_*10];
         
         //copy pointers to node in pointer of pointers
         auto it = begin();
@@ -183,48 +184,37 @@ namespace NNU9
 
         //search idxes of non unique element
         size_t idx_count = 0;
-        for (size_t i1 = 0; i1 < size_ - 1; ++i1)
+        for (size_t i1 = 0, cycle_t = 0, cycle_dif_idx = 0; i1 < size_ - 1; ++i1, ++cycle_t)
         {
             if (i1 == 0)
-                for (size_t i2 = i1; ptr_ptr_node[i2]->next != nullptr; ++i2)
+                for (size_t i2 = i1; ptr_ptr_node[i2]->next != nullptr; ++i2, ++cycle_t)
                     if (ptr_ptr_node[i1]->data == ptr_ptr_node[i2]->next->data)
-                        idx_ptr_ptr_node[idx_count++] = i2 + 1;
+                        idx_ptr_ptr_node[idx_count++ - cycle_dif_idx] = i2 + 1;
             
-            for (size_t i2 = i1; ptr_ptr_node[i2]->next->next != nullptr; ++i2)
+            for (size_t i2 = i1; ptr_ptr_node[i2]->next->next != nullptr; ++i2, ++cycle_t)
                 if (ptr_ptr_node[i1]->next->data == ptr_ptr_node[i2]->next->next->data)
-                    idx_ptr_ptr_node[idx_count++] = i2 + 2;
-        }
-
-        //unique idx
-        for (size_t i = 0; i < idx_count - 1; ++i)
-            for (auto i2 = i + 1; i2 < idx_count; ++i2)
-                if (idx_ptr_ptr_node[i] == idx_ptr_ptr_node[i2])
-                    idx_ptr_ptr_node[i2] = 0;
-        
-        //slide idx
-        for (size_t i = 0; i < idx_count; ++i)
-            while (idx_ptr_ptr_node[i] == 0)
+                    idx_ptr_ptr_node[idx_count++ - cycle_dif_idx] = i2 + 2;
+            
+            if (cycle_t > size_)
             {
-                for (auto i2 = i; i2 < idx_count; ++i2)
-                    idx_ptr_ptr_node[i2] = idx_ptr_ptr_node[i2 + 1];
-                
-                --idx_count;
+                unique_idx(idx_count, idx_ptr_ptr_node);
+                cycle_t = 0;
             }
-
-        for (size_t i = 0; i < 5; ++i)
-            std::cout << idx_ptr_ptr_node[i] << '\n';
+        }
+        
+        unique_idx(idx_count, idx_ptr_ptr_node);
         
         //remove nodes by idx
         for (size_t i = 0; i < idx_count; ++i)
         {
-            auto temp = new node;
             it = begin();
+            
             for (size_t i1 = 0; it != end(), i1 < idx_ptr_ptr_node[i] - 1 - i; ++it, ++i1){}
                 
-            temp = it.ptr->next;
+            auto temp = it.ptr->next;
             it.ptr->next = it.ptr->next->next;
             delete temp;
-
+        
             --size_;
         }
         

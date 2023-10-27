@@ -9,7 +9,7 @@ size_t binary_search(NNU9::list<T>& list, T find)
     {
         auto size = list.size();
         size_t begin = 0, end = size, i = size / 2;
-        while (list[i] != find && end - begin != 1)
+        while (list[i] != find && static_cast<double>(end) - static_cast<double>(begin) > 1.5)
         {
             if(find < list[i])
             {

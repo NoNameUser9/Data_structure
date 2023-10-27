@@ -24,8 +24,9 @@
     <ClInclude Include="deque_generic\queue.hpp" />
     <ClInclude Include="deque_generic\stack.hpp" />
     <ClInclude Include="list\forward_list.hpp" />
-    <ClInclude Include="shell_sort.hpp" />
-    <ClInclude Include="swap.hpp" />
+    <ClInclude Include="supporting_finctions\shell_sort.hpp" />
+    <ClInclude Include="supporting_finctions\swap.hpp" />
+    <ClInclude Include="supporting_finctions\unique_idx.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
