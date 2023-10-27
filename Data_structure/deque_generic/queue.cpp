@@ -37,82 +37,47 @@ namespace NNU9
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::at(const_size_t_ref pos) const
     {
-        try
-        {
-            if(pos > container_.size())
-                throw std::runtime_error("\nQueue is empty!\n");
-            
-            return container_.at(pos);
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(pos > container_.size())
+            throw std::runtime_error("\nQueue is empty!\n");
+        
+        return container_.at(pos);
     }
 
     template <class T, class Container>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::at(const_size_t_ref pos)
     {
-        try
-        {
-            if(pos > container_.size())
-                throw std::runtime_error("\nQueue is empty!\n");
-            
-            return container_.at(pos);
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(pos > container_.size())
+            throw std::runtime_error("\nQueue is empty!\n");
+        
+        return container_.at(pos);
     }
 
     template <class T, class Container>
     void queue<T, Container>::push(const_ref value)
     {
-        try
-        {
-            if(container_.max_size() == container_.size())
-                throw std::runtime_error("\nQueue is full!\n");
-            
-            container_.push_front(value);
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.max_size() == container_.size())
+            throw std::runtime_error("\nQueue is full!\n");
+        
+        container_.push_front(value);
     }
 
     template <class T, class Container>
     void queue<T, Container>::pop()
     {
-        try
-        {
-            if(container_.max_size() == container_.size())
-                throw std::runtime_error("\nQueue is empty!\n");
-            
-            container_.pop_front();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.max_size() == container_.size())
+            throw std::runtime_error("\nQueue is empty!\n");
+        
+        container_.pop_front();
     }
 
     template <class T, class Container>
     void queue<T, Container>::insert(const_size_t_ref pos, const_ref value)
     {
-        try
-        {
-            if(container_.size() == container_.max_size())
-                throw std::runtime_error("\nQueue is full!\n");
-        
-            container_.insert(pos, value);
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.size() == container_.max_size())
+            throw std::runtime_error("\nQueue is full!\n");
+    
+        container_.insert(pos, value);
     }
 
     template <class T, class Container>
@@ -124,51 +89,30 @@ namespace NNU9
     template <class T, class Container>
     void queue<T, Container>::resize(const_size_t_ref size)
     {
-        try
-        {
-            if(size < container_.size())
-                throw std::runtime_error("\nQueue has a queue bigger then a new size!\n");
+        if(size < container_.size())
+            throw std::runtime_error("\nQueue has a queue bigger then a new size!\n");
 
-            container_.resize(size);
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        container_.resize(size);
     }
 
     template <class T, class Container>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::front()
     {
-        try
-        {
-            if(empty())
-                throw std::runtime_error("\nQueue is empty!\n");
-            
-            return container_.front();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(empty())
+            throw std::runtime_error("\nQueue is empty!\n");
+        
+        return container_.front();
     }
 
     template <class T, class Container>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::front() const
     {
-        try
-        {
-            if(empty())
-                throw std::runtime_error("\nQueue is empty!\n");
-            
-            return container_.front();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(empty())
+            throw std::runtime_error("\nQueue is empty!\n");
+        
+        return container_.front();
     }
 
     template <class T, class Container>
@@ -187,33 +131,19 @@ namespace NNU9
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::back()
     {
-        try
-        {
-            if(empty())
-                throw std::runtime_error("\nQueue is empty!\n");
+        if(empty())
+            throw std::runtime_error("\nQueue is empty!\n");
 
-            return container_.back();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        return container_.back();
     }
 
     template <class T, class Container>
     void queue<T, Container>::shrink_to_fit()
     {
-        try
-        {
-            if(container_.size() == 0)
-                throw std::runtime_error("\nDeque is empty!\n");
-        
-            container_.shrink_to_fit();
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.size() == 0)
+            throw std::runtime_error("\nDeque is empty!\n");
+    
+        container_.shrink_to_fit();
     }
 
     template <class T, class Container>
@@ -238,16 +168,9 @@ namespace NNU9
     // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::back() const
     {
-        try
-        {
-            if(empty())
-                throw std::runtime_error("\nQueue is empty!\n");
+        if(empty())
+            throw std::runtime_error("\nQueue is empty!\n");
 
-            return container_.back();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        return container_.back();
     }
 }

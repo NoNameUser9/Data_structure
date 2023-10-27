@@ -3,6 +3,7 @@
 #include "deque_generic/queue.hpp"
 #include "deque_generic/deque.hpp"
 #include "list/forward_list.hpp"
+#include "supporting_finctions/time.hpp"
 #include "binary_search.hpp"
 
 typedef int my_type;
@@ -16,7 +17,6 @@ int main(int argc, char* argv[])
         stack.push(10);
         stack.push(20);
         stack.push(30);
-        // stack.emplace(10);
 
         stack.pop();
         stack.pop();
@@ -61,11 +61,12 @@ int main(int argc, char* argv[])
     }
 
     {
+        NNU9::time t;
         std::cout << "\nList:\n\n";
-    
+
         NNU9::list<my_type> list;
         NNU9::list<my_type> list2;
-        
+    
         list.push_front(3);
         list.push_front(13);
         list.push_front(13);
@@ -86,7 +87,7 @@ int main(int argc, char* argv[])
         list.push_front(53);
         list.push_front(1);
         list.push_front(12);
-    
+
         list2.push_front(32);
         list2.push_front(32);
         list2.push_front(32);
@@ -95,14 +96,23 @@ int main(int argc, char* argv[])
         list2.push_front(523);
         list2.push_front(19);
         list2.push_front(21);
-    
+
+        t.start();
         list.merge(list2);
+        t.end();
+        std::cout << "\ntime for merge:" << t.difference() << '\n';
+
+        t.start();
         list.sort();
+        t.end();
+        std::cout << "\ntime for sort:" << t.difference() << '\n';
+        
         list.insert_after(315, 11);
         std::cout << "\nsize: " << list.size() << "\n";
+        size_t i = 0;
         for (const int& it : list)
-            std::cout << "it: " << it << "\n";
-    
+            std::cout << "it(" << i++ << "): " << it << "\n";
+
         list.sort();
         std::cout << "\nsize: " << list.size() << "\n";
         std::cout << "\nback: " << list.back() << "\n\n";
@@ -110,11 +120,19 @@ int main(int argc, char* argv[])
         list.print_list();
         std::cout << '\n';
         list.unique();
-        std::cout << binary_search(list, 156516);
+        std::cout << binary_search(list, 523);
         std::cout << '\n';
         list.print_list();
         list.clear();
-        list.print_list();
+        
+        try
+        {
+            list.print_list();
+        }
+        catch (std::exception& ex)
+        {
+            std::cerr << ex.what();
+        }
     }
 
     

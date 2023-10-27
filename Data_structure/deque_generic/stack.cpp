@@ -18,67 +18,39 @@ namespace NNU9
     template <class T, class Container>
     void stack<T, Container>::push(const_ref value)
     {
-        try
-        {
-            if(container_.max_size() == container_.size())
-                throw std::runtime_error("\nStack is full!\n");
-            
-            container_.push_back(value);
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.max_size() == container_.size())
+            throw std::runtime_error("\nStack is full!\n");
+        
+        container_.push_back(value);
     }
 
     template <typename T, class Container>
     void stack<T, Container>::pop()
     {
-        try
-        {
-            if(container_.empty())
-                throw std::runtime_error("\nStack is empty!\n");
-            
-            container_.pop_back();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.empty())
+            throw std::runtime_error("\nStack is empty!\n");
+        
+        container_.pop_back();
     }
 
     template <class T, class Container>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::ref stack<T, Container>::top()
     {
-        try
-        {
-            if(container_.empty())
-                throw std::runtime_error("\nStack is empty!\n");
-            
-            return container_.front();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.empty())
+            throw std::runtime_error("\nStack is empty!\n");
+        
+        return container_.front();
     }
 
     template <typename T, class Container>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::const_ref stack<T, Container>::top() const
     {
-        try
-        {
-            if(container_.empty())
-                throw std::runtime_error("\nStack is empty!\n");
-            
-            return container_.front();
-        }
-        catch (const std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        if(container_.empty())
+            throw std::runtime_error("\nStack is empty!\n");
+        
+        return container_.front();
     }
 
     template <class T, class Container>

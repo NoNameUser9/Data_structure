@@ -26,6 +26,7 @@
     <ClInclude Include="list\forward_list.hpp" />
     <ClInclude Include="supporting_finctions\shell_sort.hpp" />
     <ClInclude Include="supporting_finctions\swap.hpp" />
+    <ClInclude Include="supporting_finctions\time.hpp" />
     <ClInclude Include="supporting_finctions\unique_idx.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

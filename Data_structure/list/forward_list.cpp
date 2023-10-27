@@ -47,21 +47,14 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::pop_front()
     {
-        try
-        {
-            if (empty())
-                throw std::runtime_error("\nList is empty!\n");
+        if (empty())
+            throw std::runtime_error("\nList is empty!\n");
 
-            const node* pop_node = front_;
-            front_ = front_->next;
-            delete pop_node;
+        const node* pop_node = front_;
+        front_ = front_->next;
+        delete pop_node;
 
-            --size_;
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        --size_;
     }
 
     template <class T, class Allocator>
@@ -74,7 +67,8 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::begin() const
     {
-        return begin();
+        iterator ret(front_);
+        return ret;
     }
 
     template <class T, class Allocator>
@@ -87,7 +81,8 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::end() const
     {
-        return end();
+        iterator ret(back_->next);
+        return ret;
     }
 
     template <class T, class Allocator>
@@ -110,56 +105,39 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::insert_after(const T& value, const size_t& index)
     {
-        try
+        node* new_node = new node(value, nullptr);
+
+        auto it = begin();
+
+        for (size_t count = 0; it.ptr->next != nullptr && count < index; ++it, ++count)
+
+            if (it.ptr == nullptr)
+                throw std::runtime_error("\ninsert_after(nullptr)!\n");
+
+        if (it.ptr->next == nullptr)
         {
-            node* new_node = new node(value, nullptr);
-
-            auto it = begin();
-
-            for (size_t count = 0; it.ptr->next != nullptr && count < index; ++it, ++count)
-
-                if (it.ptr == nullptr)
-                    throw std::runtime_error("\ninsert_after(nullptr)!\n");
-
-            if (it.ptr->next == nullptr)
-            {
-                it.ptr->next = new_node;
-                back_ = it.ptr->next;
-                ++size_;
-                return;
-            }
-
-            node* after_insert_node = it.ptr->next;
-            new_node->next = after_insert_node;
             it.ptr->next = new_node;
-
+            back_ = it.ptr->next;
             ++size_;
+            return;
         }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
-        catch (...)
-        {
-            std::cerr << "\ninsert_after() error!\n";
-        }
+
+        node* after_insert_node = it.ptr->next;
+        new_node->next = after_insert_node;
+        it.ptr->next = new_node;
+
+        ++size_;
     }
 
     template <class T, class Allocator>
     void list<T, Allocator>::print_list()
     {
-        try
-        {
-            if (empty())
-                throw std::runtime_error("\nList is empty!\n");
+        if (empty())
+            throw std::runtime_error("\nList is empty!\n");
 
-            for (auto& it : *this)
-                std::cout << "it: " << it << "\n";
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        size_t i = 0;
+        for (auto& it : *this)
+            std::cout << "it(" << i++ << "): " << it << "\n";
     }
 
     template <class T, class Allocator>
@@ -168,14 +146,11 @@ namespace NNU9
         shell_sort(*this);
     }
     
-    /**
-     * \note Not yet realized!
-     */
     template <class T, class Allocator>
     void list<T, Allocator>::unique()
     {
         node** ptr_ptr_node = new node*[size_];
-        const auto idx_ptr_ptr_node = new size_t[size_*10];
+        const auto idx_ptr_ptr_node = new size_t[size_ * 2];
         
         //copy pointers to node in pointer of pointers
         auto it = begin();
@@ -184,7 +159,7 @@ namespace NNU9
 
         //search idxes of non unique element
         size_t idx_count = 0;
-        for (size_t i1 = 0, cycle_t = 0, cycle_dif_idx = 0; i1 < size_ - 1; ++i1, ++cycle_t)
+        for (size_t i1 = 0, cycle_t = 0, cycle_dif_idx = 0; i1 < size_ - 1; ++i1)
         {
             if (i1 == 0)
                 for (size_t i2 = i1; ptr_ptr_node[i2]->next != nullptr; ++i2, ++cycle_t)
@@ -264,17 +239,17 @@ namespace NNU9
         
         for (auto it = temp.begin(); it != temp.end(); ++it)
             push_front(it.ptr->data);
-
+        list<T, Allocator>::list();
         return *this;
     }
 
     template <class T, class Allocator>
-    list<T, Allocator>::iterator::iterator(): ptr(nullptr), front_(nullptr), back_(nullptr), pos_now_(0)
+    list<T, Allocator>::iterator::iterator(): ptr(nullptr), pos_now_(0), front_(nullptr), back_(nullptr)
     {
     }
 
     template <class T, class Allocator>
-    list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), front_(begin), back_(begin), pos_now_(0)
+    list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), pos_now_(0), front_(begin), back_(begin)
     {
         while (back_ != nullptr)
             back_ = back_->next;
@@ -290,54 +265,33 @@ namespace NNU9
     // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::ref list<T, Allocator>::iterator::operator*()
     {
-        try
-        {
-            if (ptr == nullptr)
-                throw std::runtime_error("\nOut of range!\n");
+        if (ptr == nullptr)
+            throw std::runtime_error("\nOut of range!\n");
 
-            return ptr->data;
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        return ptr->data;
     }
 
     template <class T, class Allocator>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::iterator& list<T, Allocator>::iterator::operator++()
     {
-        try
-        {
-            if (ptr == nullptr)
-                throw std::runtime_error("\nOut of range!(operator++ preincrement)\n");
+        if (ptr == nullptr)
+            throw std::runtime_error("\nOut of range!(operator++ preincrement)\n");
 
-            ++pos_now_;
-            ptr = ptr->next;
-            return *this;
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        ++pos_now_;
+        ptr = ptr->next;
+        return *this;
     }
 
     template <class T, class Allocator>
     // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::iterator list<T, Allocator>::iterator::operator++(int)
     {
-        try
-        {
-            if (ptr == nullptr)
-                throw std::runtime_error("\nOut of range!(operator++ postincrement)\n");
+        if (ptr == nullptr)
+            throw std::runtime_error("\nOut of range!(operator++ postincrement)\n");
 
-            auto old = *this;
-            ++ptr;
-            return old;
-        }
-        catch (std::runtime_error& ex)
-        {
-            std::cerr << ex.what();
-        }
+        auto old = *this;
+        ++ptr;
+        return old;
     }
 }
