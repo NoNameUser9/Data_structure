@@ -48,6 +48,7 @@ namespace NNU9
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
         ref operator[](size_t index);
+        list& operator=(list& right);
         
         class iterator
         {
