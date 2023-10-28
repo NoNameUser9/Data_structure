@@ -16,7 +16,6 @@ namespace NNU9
     template <typename T, class Allocator>
     deque<T, Allocator>::deque(std::initializer_list<T> list): arr_(new T[SIZE]{}), max_size_for_all_(SIZE), max_size_(SIZE), size_(0)
     {
-        size_t i = 0;
         for (auto it : list)
             arr_[size_++] = it;
     }
@@ -97,7 +96,6 @@ namespace NNU9
     {
         if(size_ == max_size_for_all_)
             throw std::runtime_error("\nDeque is full!\n");
-        
         
         if(incremented_times_ > 0)
         {

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define SIZE 50  // NOLINT(modernize-macro-to-enum)
+#define SIZE 1000  // NOLINT(modernize-macro-to-enum)
 
 namespace NNU9
 {
