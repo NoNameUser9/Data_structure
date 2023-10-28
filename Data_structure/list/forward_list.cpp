@@ -239,9 +239,16 @@ namespace NNU9
             auto temp = it.ptr->next;
             it.ptr->next = it.ptr->next->next;
             delete temp;
-        
+            
+            // back_ = it.back_;
             --size_;
         }
+
+        it = begin();
+        
+        while (it.ptr->next != nullptr)
+            ++it;
+        back_ = it.ptr;
         
         delete[] ptr_ptr_node;
     }

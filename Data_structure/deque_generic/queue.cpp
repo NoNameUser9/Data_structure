@@ -64,7 +64,7 @@ namespace NNU9
         if(container_.max_size() == container_.size())
             throw std::runtime_error("\nQueue is full!\n");
         
-        container_.push_front(value);
+        container_.push_back(value);
     }
 
     template <class T, class Container>

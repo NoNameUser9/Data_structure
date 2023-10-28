@@ -18,9 +18,7 @@ namespace NNU9
     {
         size_t i = 0;
         for (auto it : list)
-            arr_[i++] = it;
-            
-        size_ = list.size();
+            arr_[size_++] = it;
     }
 
     template <class T, class  Allocator>
