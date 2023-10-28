@@ -12,6 +12,13 @@ namespace NNU9
     template <class T, class Container>
     stack<T, Container>::stack() {}
 
+    template <typename T, class Container>
+    stack<T, Container>::stack(std::initializer_list<T> list)
+    {
+        for (auto it : list)
+            container_.push_back(it);
+    }
+
     template <class T, class Container>
     stack<T, Container>::~stack() {}
 
@@ -34,7 +41,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::ref stack<T, Container>::top()
     {
         if(container_.empty())
@@ -44,7 +50,6 @@ namespace NNU9
     }
 
     template <typename T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename stack<T, Container>::const_ref stack<T, Container>::top() const
     {
         if(container_.empty())

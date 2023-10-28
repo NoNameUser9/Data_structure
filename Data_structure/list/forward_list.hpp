@@ -12,6 +12,9 @@ namespace NNU9
     template<class T, class Allocator = allocator<T>>
     class list  // NOLINT(cppcoreguidelines-special-member-functions)
     {
+        class iterator;
+        using ref = T&;
+        using const_ref = const T&;
         struct node
         {
             T data;
@@ -22,11 +25,13 @@ namespace NNU9
         size_t size_;
         Allocator alloc_;
     public:
-        class iterator;
-        using ref = T&;
-        using const_ref = const T&;
         list();
+        list(const list &right);
+        template<class... Args>
+        // ReSharper disable once CppNonExplicitConvertingConstructor
+        list(Args ... args);
         ~list();
+        
         void push_front(const_ref value);
         void push_front(ref value);
         void pop_front();
@@ -36,35 +41,34 @@ namespace NNU9
         iterator end() const;
         ref front();
         ref back();
-        void insert_after(const T& value, const size_t& index);
+        void insert_after(const_ref value, const size_t& index);
         void print_list();
         void sort();
-        /**
-         * \note Not yet implemented!
-         */
         void unique();
-        void merge(list& list);
+        void merge(const list& right);
         void clear();
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
         ref operator[](size_t index);
-        list& operator=(list& right);
+        list& operator=(const list& right);
         
-        class iterator
+        class iterator  // NOLINT(cppcoreguidelines-special-member-functions)
         {
         public:
             node* ptr;
+            
             iterator();
             explicit iterator(auto begin);
-            ~iterator(){}
-            
+            ~iterator();
+
             bool operator==(const iterator& right) const;
-            // ReSharper disable once CppNotAllPathsReturnValue
             ref operator*();
             iterator& operator++();
             iterator operator++(int);
-            size_t pos_now_;
+            [[nodiscard]] size_t pos() const;
+            
         private:
+            size_t pos_now_;
             node* front_;
             node* back_;
         };

@@ -15,6 +15,29 @@ namespace NNU9
     list<T, Allocator>::list(): front_(nullptr), back_(front_), size_(0) {}
 
     template <class T, class Allocator>
+    list<T, Allocator>::list(const list& right): front_{new node{right.front_->data, nullptr}}
+    {
+        list temp;
+        for (iterator it = right.begin(); it != right.end(); ++it)
+            temp.push_front(it.ptr->data);
+        
+        for (iterator it = temp.begin(); it != right.end(); ++it)
+            push_front(it.ptr->data);
+    }
+
+    template <class T, class Allocator>
+    template <class ... Args>
+    list<T, Allocator>::list(Args... args)
+    {
+        constexpr auto num_args{ sizeof...(Args) };
+
+        T temp[num_args] = {args ...};
+            
+        for (auto i = 0; i < num_args; ++i)
+            push_front(temp[i]);
+    }
+
+    template <class T, class Allocator>
     list<T, Allocator>::~list()
     {
         clear();
@@ -60,6 +83,9 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::begin()
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         iterator ret(front_);
         return ret;
     }
@@ -67,6 +93,9 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::begin() const
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         iterator ret(front_);
         return ret;
     }
@@ -74,6 +103,9 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::end()
     {
+        if (back_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         iterator ret(back_->next);
         return ret;
     }
@@ -81,6 +113,9 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::iterator list<T, Allocator>::end() const
     {
+        if (back_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         iterator ret(back_->next);
         return ret;
     }
@@ -88,12 +123,18 @@ namespace NNU9
     template <class T, class Allocator>
     typename list<T, Allocator>::ref list<T, Allocator>::front()
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         return front_->data;
     }
 
     template <class T, class Allocator>
     typename list<T, Allocator>::ref list<T, Allocator>::back()
     {
+        if (back_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         return back_->data;
     }
 
@@ -103,8 +144,11 @@ namespace NNU9
      * \param index index of element after which will be inserted the new element
      */
     template <class T, class Allocator>
-    void list<T, Allocator>::insert_after(const T& value, const size_t& index)
+    void list<T, Allocator>::insert_after(const_ref value, const size_t& index)
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         node* new_node = new node(value, nullptr);
 
         auto it = begin();
@@ -143,12 +187,18 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::sort()
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         shell_sort(*this);
     }
     
     template <class T, class Allocator>
     void list<T, Allocator>::unique()
     {
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
         node** ptr_ptr_node = new node*[size_];
         const auto idx_ptr_ptr_node = new size_t[size_ * 2];
         
@@ -197,9 +247,12 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    void list<T, Allocator>::merge(list& list)
+    void list<T, Allocator>::merge(const list& right)
     {
-        for (auto it = list.begin(); it != list.end(); ++it)
+        if (front_ == nullptr)
+            throw std::runtime_error("\nlist is empty!\n");
+        
+        for (auto it = right.begin(); it != right.end(); ++it)
             push_front(it.ptr->data);
     }
 
@@ -231,22 +284,23 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    list<T, Allocator>& list<T, Allocator>::operator=(list& right)
+    list<T, Allocator>& list<T, Allocator>::operator=(const list& right)
     {
+        if (right.front_ == nullptr)
+            throw std::runtime_error("\nright list is empty!\n");
+        
         list temp;
         for (auto it = right.begin(); it != right.end(); ++it)
             temp.push_front(it.ptr->data);
         
         for (auto it = temp.begin(); it != temp.end(); ++it)
             push_front(it.ptr->data);
-        list<T, Allocator>::list();
+        
         return *this;
     }
 
     template <class T, class Allocator>
-    list<T, Allocator>::iterator::iterator(): ptr(nullptr), pos_now_(0), front_(nullptr), back_(nullptr)
-    {
-    }
+    list<T, Allocator>::iterator::iterator(): ptr(nullptr), pos_now_(0), front_(nullptr), back_(nullptr) {}
 
     template <class T, class Allocator>
     list<T, Allocator>::iterator::iterator(auto begin): ptr(begin), pos_now_(0), front_(begin), back_(begin)
@@ -256,13 +310,15 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
+    list<T, Allocator>::iterator::~iterator() {}
+
+    template <class T, class Allocator>
     bool list<T, Allocator>::iterator::operator==(const iterator& right) const
     {
         return ptr == right.ptr;
     }
 
     template <class T, class Allocator>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::ref list<T, Allocator>::iterator::operator*()
     {
         if (ptr == nullptr)
@@ -272,7 +328,6 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::iterator& list<T, Allocator>::iterator::operator++()
     {
         if (ptr == nullptr)
@@ -284,7 +339,6 @@ namespace NNU9
     }
 
     template <class T, class Allocator>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename list<T, Allocator>::iterator list<T, Allocator>::iterator::operator++(int)
     {
         if (ptr == nullptr)
@@ -293,5 +347,11 @@ namespace NNU9
         auto old = *this;
         ++ptr;
         return old;
+    }
+
+    template <class T, class Allocator>
+    size_t list<T, Allocator>::iterator::pos() const
+    {
+        return pos_now_;
     }
 }

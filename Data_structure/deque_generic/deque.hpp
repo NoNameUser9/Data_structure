@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <initializer_list>
+
 #include "../allocator.hpp"
 
 namespace NNU9
@@ -6,12 +8,15 @@ namespace NNU9
     template<typename T, class Allocator = allocator<T>>
     class deque  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-    public:
         using ref = T&;
         using const_ref = const T&;
         using const_size_t_ref = const size_t&;
+        
+    public:
         deque();
+        deque(std::initializer_list<T> list);
         ~deque();
+        
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
         [[nodiscard]] size_t max_size() const;
@@ -34,6 +39,7 @@ namespace NNU9
         [[nodiscard]] ref front();
         ref operator[](const_size_t_ref pos);
         const_ref operator[](const_size_t_ref pos) const;
+        
     private:
         size_t incremented_times_ = 0;
         T* arr_;

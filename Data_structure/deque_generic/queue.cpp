@@ -13,6 +13,13 @@ namespace NNU9
     queue<T, Container>::queue() {}
 
     template <class T, class Container>
+    queue<T, Container>::queue(std::initializer_list<T> list)
+    {
+        for (auto it : list)
+            container_.push_back(it);
+    }
+
+    template <class T, class Container>
     queue<T, Container>::~queue() {}
 
     template <class T, class Container>
@@ -34,7 +41,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::at(const_size_t_ref pos) const
     {
         if(pos > container_.size())
@@ -44,7 +50,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::at(const_size_t_ref pos)
     {
         if(pos > container_.size())
@@ -96,7 +101,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::front()
     {
         if(empty())
@@ -106,7 +110,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::front() const
     {
         if(empty())
@@ -128,7 +131,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::ref queue<T, Container>::back()
     {
         if(empty())
@@ -165,7 +167,6 @@ namespace NNU9
     }
 
     template <class T, class Container>
-    // ReSharper disable once CppNotAllPathsReturnValue
     typename queue<T, Container>::const_ref queue<T, Container>::back() const
     {
         if(empty())

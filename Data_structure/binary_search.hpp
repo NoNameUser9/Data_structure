@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "list/forward_list.hpp"
 
-// ReSharper disable once CppNotAllPathsReturnValue
 template<class T>
 size_t binary_search(NNU9::list<T>& list, T find)
 {

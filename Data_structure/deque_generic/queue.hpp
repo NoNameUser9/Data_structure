@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <utility>
+
 #include "deque.hpp"
 
 namespace NNU9
@@ -6,11 +8,13 @@ namespace NNU9
     template<class T, class Container = deque<T>>
     class queue  // NOLINT(cppcoreguidelines-special-member-functions)
     {
-    public:
         using ref = T&;
         using const_ref = const T&;
         using const_size_t_ref = const size_t&;
+        
+    public:
         queue();
+        queue(std::initializer_list<T> list);
         ~queue();
         [[nodiscard]] bool empty() const;
         [[nodiscard]] size_t size() const;
@@ -32,6 +36,7 @@ namespace NNU9
         [[nodiscard]] const_ref front() const;
         ref operator[](const_size_t_ref pos);
         const_ref operator[](const_size_t_ref pos) const;
+        
     private:
         Container container_;
     };

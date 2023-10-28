@@ -4,12 +4,13 @@
 namespace NNU9
 {
     template <class  T>
-    class allocator {
-    public:
+    class allocator {  // NOLINT(cppcoreguidelines-special-member-functions)
         using ptr = T*;
         using value_type = T;
         using const_ptr = const T*;
         using size_type = size_t;
+        
+    public:
         allocator() noexcept;
         template <typename U>
         explicit allocator(const allocator<U>&) noexcept;
