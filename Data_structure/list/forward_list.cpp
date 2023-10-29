@@ -6,6 +6,7 @@
 namespace NNU9
 {
     template list<int>;
+    template list<size_t>;
     template list<float>;
     template list<char>;
     template list<bool>;
@@ -46,19 +47,25 @@ namespace NNU9
     template <class T, class Allocator>
     void list<T, Allocator>::push_front(const_ref value)
     {
-        auto new_node = new node{value, nullptr};
-
-        if (size_ == 0)
+        node* new_node = new node{value};
+        
+        switch (size_)
         {
-            front_ = new_node;
-            back_ = front_;
-            ++size_;
-            return;
+        case 0:
+            {
+                new_node->next = nullptr;
+                front_ = new_node;
+                back_ = front_;
+                ++size_;
+                return;
+            }
+        default:
+            {
+                new_node->next = front_;
+                front_ = new_node;
+                ++size_;
+            }
         }
-
-        new_node->next = front_;
-        front_ = new_node;
-        ++size_;
     }
 
     template <class T, class Allocator>

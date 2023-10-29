@@ -1,4 +1,4 @@
-#include <iostream>
+// #include <iostream>
 #include <list>
 #include <queue>
 #include <stack>
@@ -9,17 +9,24 @@
 #include "list/forward_list.hpp"
 #include "supporting_finctions/time.hpp"
 #include "binary_search.hpp"
+#include "supporting_finctions/struct.h"
+#include "supporting_finctions/io.h"
 
+std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
 typedef int my_type;
+auto nt = new node_time[10];
+Table table(12, 3);
 
 int main(int argc, char* argv[])
 {
+    std::stringstream ss;
+    read_vec(table, path);
     const size_t size = static_cast<size_t>(rand())%100;
     
     auto init_arr = new my_type[size];
     for (size_t i = 0; i < size; ++i)
         init_arr[i] = rand();
-    
+    NNU9::list<size_t> time_list;
     while (true)
     {
         home:
@@ -118,26 +125,34 @@ int main(int argc, char* argv[])
                                 deque.push_front(init_arr[i]);
                             t.end();
                             std::cout << "\ntime NNU9::deque.push_front() for " << deque.size() << " elements: " << t.difference() << '\n';
-
+                            nt[0] = sort_type::deque_puf;
+                            nt[0].set_time_NNU9(t.difference());
+                            
                             std::cout << "\ntime NNU9::deque.pop_front() for " << deque.size() << '\n';
                             t.start();
                             for (size_t i = 0; i < size; ++i)
                                 deque.pop_front();
                             t.end();
                             std::cout << " elements: " << t.difference() << '\n';
-
+                            nt[1] = sort_type::deque_pf;
+                            nt[1].set_time_NNU9(t.difference());
+                            
                             t.start();
                             for (size_t i = 0; i < size; ++i)
                                 deque.push_back(init_arr[i]);
                             t.end();
                             std::cout << "\ntime NNU9::deque.push_back() for " << deque.size() << " elements: " << t.difference() << '\n';
-
+                            nt[2] = sort_type::deque_pub;
+                            nt[2].set_time_NNU9(t.difference());
+                            
                             std::cout << "\ntime NNU9::deque.pop_back() for " << deque.size() << '\n';
                             t.start();
                             for (size_t i = 0; i < size; ++i)
                                 deque.pop_back();
                             t.end();
                             std::cout << " elements: " << t.difference() << '\n';
+                            nt[3] = sort_type::deque_pb;
+                            nt[3].set_time_NNU9(t.difference());
                             
                             for (size_t i = 0; i < deque.size(); ++i)
                                 std::cout << "it(" << i << ")" << deque[i] << '\n';
@@ -147,6 +162,8 @@ int main(int argc, char* argv[])
                                 deq.push_front(init_arr[i]);
                             t.end();
                             std::cout << "\ntime std::deque.push_front() for " << deq.size() << " elements: " << t.difference() << '\n';
+                            // nt[0](sort_type::binary_search);
+                            nt[0].set_time_std(t.difference());
 
                             std::cout << "\ntime std::deque.pop_front() for " << deq.size() << '\n';
                             t.start();
@@ -154,12 +171,14 @@ int main(int argc, char* argv[])
                                 deq.pop_front();
                             t.end();
                             std::cout << " elements: " << t.difference() << '\n';
+                            nt[1].set_time_std(t.difference());
 
                             t.start();
                             for (size_t i = 0; i < size; ++i)
                                 deq.push_back(init_arr[i]);
                             t.end();
                             std::cout << "\ntime std::deque.push_back() for " << deq.size() << " elements: " << t.difference() << '\n';
+                            nt[2].set_time_std(t.difference());
 
                             std::cout << "\ntime std::deque.pop_back() for " << deq.size() << '\n';
                             t.start();
@@ -167,10 +186,10 @@ int main(int argc, char* argv[])
                                 deq.pop_back();
                             t.end();
                             std::cout << " elements: " << t.difference() << '\n';
+                            nt[3].set_time_std(t.difference());
+
                             system("pause");
-                            // system("cls");
-                            // goto case3;
-                            break;
+                            goto home;
                         }
                     case 2:
                         {
@@ -218,7 +237,6 @@ int main(int argc, char* argv[])
         case 4:
             {
                 system("cls");
-                // ClearScreen();
                 std::cout << "\nDeque:\n"
                              "1.time test\n"
                              "2.show list\n"
@@ -227,6 +245,7 @@ int main(int argc, char* argv[])
                 NNU9::time t;
                 NNU9::list<my_type> list;
                 std::list<my_type> l;
+                std::list<my_type> l2;
                 
                 size_t sw4;
                 std::cin >> sw4;
@@ -239,34 +258,61 @@ int main(int argc, char* argv[])
                         for (size_t i = 0; i < size; ++i)
                             list.push_front(init_arr[i]);
                         t.end();
-                        std::cout << "\ntime std::list.push_front() for " << size << " elements: " << t.difference();
+                        std::cout << "\ntime NNU9::list.push_front() for " << size << " elements: " << t.difference();
+                        nt[4] = sort_type::list_puf;
+                        nt[4].set_time_NNU9(t.difference());
 
+                        for (size_t i = 0; i < size; ++i)
+                            l2.push_front(init_arr[i]);
+                        
                         t.start();
                         for (size_t i = 0; i < size; ++i)
                             l.push_front(init_arr[i]);
                         t.end();
                         std::cout << "\ntime std::list.push_front() for " << size << " elements: " << t.difference();
+                        nt[4].set_time_std(t.difference());
                         
                         t.start();
                         NNU9::list<my_type> list2 = list;
                         t.end();
                         std::cout << "\ntime NNU9::list.operator= for " << list2.size() << " elements: " << t.difference();
                         
-                        t.start();
-                        list.merge(list2);
-                        t.end();
-                        std::cout << "\ntime for NNU9::list.merge() for " << list.size() << " elements: " << t.difference() << '\n';
-
+                        
                         t.start();
                         list.sort();
                         t.end();
                         std::cout << "\ntime for NNU9::list.sort() for " << list.size() << " elements: " << t.difference() << '\n';
+                        nt[6] = sort_type::list_sort;
+                        nt[6].set_time_NNU9(t.difference());
 
+                        t.start();
+                        l.sort();
+                        t.end();
+                        std::cout << "\ntime for std::list.sort() for " << l.size() << " elements: " << t.difference() << '\n';
+                        nt[6].set_time_std(t.difference());
+                        
+                        t.start();
+                        list.merge(list2);
+                        t.end();
+                        std::cout << "\ntime for NNU9::list.merge() for " << list.size() << " elements: " << t.difference() << '\n';
+                        nt[5] = sort_type::list_merge;
+                        nt[5].set_time_NNU9(t.difference());
+
+                        l2.sort();
+                        
+                        t.start();
+                        l.merge(l2);
+                        t.end();
+                        std::cout << "\ntime for std::list.merge() for " << l.size() << " elements: " << t.difference() << '\n';
+                        nt[5].set_time_std(t.difference());
+                        
                         t.start();
                         list.insert_after(315, 11);
                         t.end();
                         std::cout << "\ntime for NNU9::list.insert_after() for " << list.size() << " elements: " << t.difference() << '\n';
-
+                        nt[7] = sort_type::list_ins_aft;
+                        nt[7].set_time_NNU9(t.difference());
+                        
                         list.sort();
                         std::cout << "\nsize: " << list.size() << "\n";
                         std::cout << "\nback: " << list.back() << "\n\n";
@@ -276,7 +322,16 @@ int main(int argc, char* argv[])
                         t.start();
                         list.unique();
                         t.end();
+                        nt[8] = sort_type::list_u;
+                        nt[8].set_time_NNU9(t.difference());
                         std::cout << "\ntime for NNU9::list.unique() for " << list.size() << " unique elements: " << t.difference() << '\n';
+
+                        std::cout << '\n';
+                        t.start();
+                        l.unique();
+                        t.end();
+                        nt[8].set_time_std(t.difference());
+                        std::cout << "\ntime for std::list.unique() for " << l.size() << " unique elements: " << t.difference() << '\n';
 
                         t.start();
                         try
@@ -289,6 +344,8 @@ int main(int argc, char* argv[])
                         }
                         t.end();
                         std::cout << "\ntime for NNU9::binary_search(list, 523) for " << list.size() << " elements: " << t.difference() << '\n';
+                        nt[9] = sort_type::binary_search;
+                        nt[9].set_time_NNU9(t.difference());
                         
                         break;
                     }
@@ -296,7 +353,7 @@ int main(int argc, char* argv[])
                     {
                         for (size_t i = 0; i < size; ++i)
                             list.push_front(init_arr[i]);
-                        
+
                         try
                         {
                             list.print_list();
@@ -330,6 +387,8 @@ int main(int argc, char* argv[])
             }
         case 5:
             delete[] init_arr;
+            table.at(11, 1) = std::to_string(size) + ';';
+            write_vec(nt, table, path);
             exit(EXIT_SUCCESS);
         default:
             break;
