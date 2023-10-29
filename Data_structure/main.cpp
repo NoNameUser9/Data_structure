@@ -11,9 +11,10 @@
 #include "binary_search.hpp"
 #include "supporting_finctions/struct.h"
 #include "supporting_finctions/io.h"
+#include "supporting_finctions/typedef.h"
+#include "supporting_finctions/bynary_tree_print.hpp"
 
 std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
-typedef int my_type;
 auto nt = new node_time[10];
 Table table(12, 3);
 
@@ -21,19 +22,28 @@ int main(int argc, char* argv[])
 {
     std::stringstream ss;
     read_vec(table, path);
-    const size_t size = static_cast<size_t>(rand())%100;
+    srand(time(NULL));
+    const size_t size = rand()&100;
     
     auto init_arr = new my_type[size];
     for (size_t i = 0; i < size; ++i)
         init_arr[i] = rand();
     NNU9::list<size_t> time_list;
+    NNU9::list<my_type> ll;
+    for (size_t i = 0; i < size; ++i)
+        ll.push_front(init_arr[i]);
+
+    ll.sort();
+    binary_tree_print<my_type>(ll);
+    system("pause");
+    
     while (true)
     {
         home:
         system("cls");
         // ClearScreen();
         size_t sw1 = 0;
-        std::cout << "Program Data_Structure ver: 1.0.0\n"
+        std::cout << "Program Data_Structure ver: 1.1.1\n"
                      "1.stack\n"
                      "2.queue\n"
                      "3.deque\n"
@@ -244,8 +254,8 @@ int main(int argc, char* argv[])
                              "4.exit\n";
                 NNU9::time t;
                 NNU9::list<my_type> list;
-                std::list<my_type> l;
-                std::list<my_type> l2;
+                std::forward_list<my_type> l;
+                std::forward_list<my_type> l2;
                 
                 size_t sw4;
                 std::cin >> sw4;
@@ -288,7 +298,7 @@ int main(int argc, char* argv[])
                         t.start();
                         l.sort();
                         t.end();
-                        std::cout << "\ntime for std::list.sort() for " << l.size() << " elements: " << t.difference() << '\n';
+                        std::cout << "\ntime for std::list.sort() for " << l.max_size() << " elements: " << t.difference() << '\n';
                         nt[6].set_time_std(t.difference());
                         
                         t.start();
@@ -303,7 +313,7 @@ int main(int argc, char* argv[])
                         t.start();
                         l.merge(l2);
                         t.end();
-                        std::cout << "\ntime for std::list.merge() for " << l.size() << " elements: " << t.difference() << '\n';
+                        std::cout << "\ntime for std::list.merge() for " << l.max_size() << " elements: " << t.difference() << '\n';
                         nt[5].set_time_std(t.difference());
                         
                         t.start();
@@ -331,7 +341,7 @@ int main(int argc, char* argv[])
                         l.unique();
                         t.end();
                         nt[8].set_time_std(t.difference());
-                        std::cout << "\ntime for std::list.unique() for " << l.size() << " unique elements: " << t.difference() << '\n';
+                        std::cout << "\ntime for std::list.unique() for " << l.max_size() << " unique elements: " << t.difference() << '\n';
 
                         t.start();
                         try

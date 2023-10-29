@@ -30,7 +30,11 @@
     <ClInclude Include="supporting_finctions\struct.h" />
     <ClInclude Include="supporting_finctions\swap.hpp" />
     <ClInclude Include="supporting_finctions\time.hpp" />
+    <ClInclude Include="supporting_finctions\typedef.h" />
     <ClInclude Include="supporting_finctions\unique_idx.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="supporting_finctions\bynary_tree_print.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

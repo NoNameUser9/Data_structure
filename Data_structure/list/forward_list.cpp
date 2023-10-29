@@ -16,7 +16,7 @@ namespace NNU9
     list<T, Allocator>::list(): front_(nullptr), back_(front_), size_(0) {}
 
     template <class T, class Allocator>
-    list<T, Allocator>::list(const list& right): front_{new node{right.front_->data, nullptr}}
+    list<T, Allocator>::list(const list& right): front_{new node{right.front_->data, nullptr}}, size_(0)
     {
         list temp;
         for (iterator it = right.begin(); it != right.end(); ++it)
