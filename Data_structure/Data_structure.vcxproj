@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="binary_tree.cpp" />
     <ClCompile Include="deque_generic\deque.cpp" />
     <ClCompile Include="deque_generic\queue.cpp" />
     <ClCompile Include="deque_generic\stack.cpp" />
@@ -21,6 +22,10 @@
   <ItemGroup>
     <ClInclude Include="allocator.hpp" />
     <ClInclude Include="binary_search.hpp" />
+    <ClInclude Include="binary_tree.h" />
+    <ClInclude Include="BST ASCII Visualization\bst.h" />
+    <ClInclude Include="BST ASCII Visualization\node.h" />
+    <ClInclude Include="BST ASCII Visualization\visualizer.h" />
     <ClInclude Include="deque_generic\deque.hpp" />
     <ClInclude Include="deque_generic\queue.hpp" />
     <ClInclude Include="deque_generic\stack.hpp" />

@@ -1,25 +1,29 @@
-// #include <iostream>
+#include <iostream>
 #include <list>
 #include <queue>
 #include <stack>
 #include <windows.h>
-#include "deque_generic/stack.hpp"
-#include "deque_generic/queue.hpp"
-#include "deque_generic/deque.hpp"
-#include "list/forward_list.hpp"
-#include "supporting_finctions/time.hpp"
-#include "binary_search.hpp"
-#include "supporting_finctions/struct.h"
-#include "supporting_finctions/io.h"
-#include "supporting_finctions/typedef.h"
-#include "supporting_finctions/bynary_tree_print.hpp"
 
+#include "binary_search.hpp"
+#include "deque_generic/deque.hpp"
+#include "deque_generic/queue.hpp"
+#include "deque_generic/stack.hpp"
+#include "list/forward_list.hpp"
+#include "supporting_finctions/io.h"
+#include "supporting_finctions/struct.h"
+#include "supporting_finctions/time.hpp"
+#include "supporting_finctions/typedef.h"
+
+#include "BST ASCII Visualization/bst.h"
+#include "BST ASCII Visualization/visualizer.h"
+  
 std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
 auto nt = new node_time[10];
 Table table(12, 3);
 
 int main(int argc, char* argv[])
 {
+    system("Pause");
     std::stringstream ss;
     read_vec(table, path);
     srand(time(NULL));
@@ -33,8 +37,16 @@ int main(int argc, char* argv[])
     for (size_t i = 0; i < size; ++i)
         ll.push_front(init_arr[i]);
 
-    ll.sort();
-    binary_tree_print<my_type>(ll);
+    // Create a balanced tree from the previous array
+    bst<my_type> tree;
+    tree = tree.create_balanced_tree(init_arr, size);
+
+    // Visualize the resulting tree
+    const visualizer<my_type> v(tree);
+    std::cout << "\n\n";
+    v.visualize();
+    std::cout << "\n\n";
+
     system("pause");
     
     while (true)

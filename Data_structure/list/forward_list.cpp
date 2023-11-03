@@ -161,7 +161,6 @@ namespace NNU9
         auto it = begin();
 
         for (size_t count = 0; it.ptr->next != nullptr && count < index; ++it, ++count)
-
             if (it.ptr == nullptr)
                 throw std::runtime_error("\ninsert_after(nullptr)!\n");
 
