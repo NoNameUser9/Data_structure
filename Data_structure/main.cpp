@@ -3,6 +3,8 @@
 #include <queue>
 #include <stack>
 #include <windows.h>
+#include <boost/any.hpp>
+#include "matplotlibcpp.h"
 
 #include "binary_search.hpp"
 #include "deque_generic/deque.hpp"
@@ -16,6 +18,7 @@
 
 #include "BST ASCII Visualization/bst.h"
 #include "BST ASCII Visualization/visualizer.h"
+namespace plt = matplotlibcpp;
   
 std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
 auto nt = new node_time[10];
@@ -45,6 +48,8 @@ int main(int argc, char* argv[])
     const visualizer<my_type> v(tree);
     std::cout << "\n\n";
     v.visualize();
+    // plt::plot({1,3,2,4});
+    // plt::show();
     std::cout << "\n\n";
 
     system("pause");
