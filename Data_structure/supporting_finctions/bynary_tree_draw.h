@@ -21,8 +21,6 @@ void drawBinaryTree(cv::Mat& image, Node<my_type>* node, const unsigned int x, c
     double scaleX = std::pow(3,xs);
     // Отображение текущего узла
     const cv::Point center(static_cast<int>(x), static_cast<int>(y));
-    cv::circle(image, center, static_cast<int>(radius), cv::Scalar(0, 0, 0), -1);
-    cv::putText(image, std::to_string(node->data), cv::Point(static_cast<int>(x - radius / 2), static_cast<int>(y)), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2);
     
     // Вычисление координат следующего уровня
     unsigned int nextLevelY = y + static_cast<unsigned int>(spacing * scaleY);
@@ -35,6 +33,9 @@ void drawBinaryTree(cv::Mat& image, Node<my_type>* node, const unsigned int x, c
         unsigned int leftChildY = nextLevelY;
     // drawBinaryTree(image, node->get_left(), x - nextLevelXSpacing, nextLevelY, level + 1);
         cv::line(image, center, cv::Point(static_cast<int>(leftChildX), static_cast<int>(leftChildY)), cv::Scalar(0, 0, 0), 2);
+        cv::circle(image, center, static_cast<int>(radius), cv::Scalar(0, 0, 0), -1);
+        cv::putText(image, std::to_string(node->data), cv::Point(static_cast<int>(x - radius / 2), static_cast<int>(y)), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2);
+    
         drawBinaryTree(image, node->left, leftChildX, leftChildY, level + 1, size);
     }
     
@@ -45,8 +46,17 @@ void drawBinaryTree(cv::Mat& image, Node<my_type>* node, const unsigned int x, c
         unsigned int rightChildY = nextLevelY;
         
         cv::line(image, center, cv::Point(static_cast<int>(rightChildX), static_cast<int>(rightChildY)), cv::Scalar(0, 0, 0), 2);
+        cv::circle(image, center, static_cast<int>(radius), cv::Scalar(0, 0, 0), -1);
+        cv::putText(image, std::to_string(node->data), cv::Point(static_cast<int>(x - radius / 2), static_cast<int>(y)), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2);
+    
         drawBinaryTree(image, node->right, rightChildX, rightChildY, level + 1, size);
-    }  
+    }
+
+    if (node->left == nullptr && node->left == nullptr)
+    {
+        cv::circle(image, center, static_cast<int>(radius), cv::Scalar(0, 0, 0), -1);
+        cv::putText(image, std::to_string(node->data), cv::Point(static_cast<int>(x - radius / 2), static_cast<int>(y)), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 2);
+    }
     
     // Отображение правого поддерева
     // drawBinaryTree(image, node->get_right(), x + nextLevelXSpacing, nextLevelY, level + 1);
