@@ -3,22 +3,25 @@
 #include <queue>
 #include <stack>
 #include <windows.h>
-#include <boost/any.hpp>
-#include "matplotlibcpp.h"
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 
-#include "binary_search.hpp"
+#define VER "1.4.0"
+// #include <valarray>
+
+#include "binary_tree/binary_search.hpp"
+#include "binary_tree/binary_tree.h"
 #include "deque_generic/deque.hpp"
 #include "deque_generic/queue.hpp"
 #include "deque_generic/stack.hpp"
 #include "list/forward_list.hpp"
+#include "supporting_finctions/bynary_tree_draw.h"
 #include "supporting_finctions/io.h"
 #include "supporting_finctions/struct.h"
 #include "supporting_finctions/time.hpp"
 #include "supporting_finctions/typedef.h"
 
-#include "BST ASCII Visualization/bst.h"
-#include "BST ASCII Visualization/visualizer.h"
-namespace plt = matplotlibcpp;
   
 std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
 auto nt = new node_time[10];
@@ -26,33 +29,21 @@ Table table(12, 3);
 
 int main(int argc, char* argv[])
 {
-    system("Pause");
     std::stringstream ss;
     read_vec(table, path);
     srand(time(NULL));
-    const size_t size = rand()&100;
-    
+    size_t t_s = rand()%10;
+    while (t_s < 2000)
+        t_s = rand()%5000;
+ 
+    const size_t size = t_s;
     auto init_arr = new my_type[size];
     for (size_t i = 0; i < size; ++i)
-        init_arr[i] = rand();
+        init_arr[i] = rand()%1000;
     NNU9::list<size_t> time_list;
     NNU9::list<my_type> ll;
     for (size_t i = 0; i < size; ++i)
         ll.push_front(init_arr[i]);
-
-    // Create a balanced tree from the previous array
-    bst<my_type> tree;
-    tree = tree.create_balanced_tree(init_arr, size);
-
-    // Visualize the resulting tree
-    const visualizer<my_type> v(tree);
-    std::cout << "\n\n";
-    v.visualize();
-    // plt::plot({1,3,2,4});
-    // plt::show();
-    std::cout << "\n\n";
-
-    system("pause");
     
     while (true)
     {
@@ -60,12 +51,14 @@ int main(int argc, char* argv[])
         system("cls");
         // ClearScreen();
         size_t sw1 = 0;
-        std::cout << "Program Data_Structure ver: 1.1.1\n"
+        std::cout << "Program Data_Structure ver: "
+        VER"\n"
                      "1.stack\n"
                      "2.queue\n"
                      "3.deque\n"
                      "4.forward_list\n"
-                     "5.exit\n";
+                     "5.binary_tree\n"
+                     "6.exit\n";
         std::cin >> sw1;
         switch (sw1)
         {
@@ -413,6 +406,25 @@ int main(int argc, char* argv[])
                 break;
             }
         case 5:
+            {
+                BinaryTree<my_type> tree;
+                tree = tree.create_balanced_tree(init_arr, 0, size);
+                Node<my_type>* root = tree.get_root();
+    
+                // Создание изображения
+                cv::Mat image(1000, 2500, CV_8UC3, cv::Scalar(255, 255, 255));
+    
+                // Отображение бинарного дерева
+                drawBinaryTree(image, root, 1250, 50, 0, size);
+    
+                // Отображение изображения
+                cv::imshow("Binary Tree", image);
+                cv::waitKey(0);
+
+                system("pause");
+                break;
+            }
+        case 6:
             delete[] init_arr;
             table.at(11, 1) = std::to_string(size) + ';';
             write_vec(nt, table, path);

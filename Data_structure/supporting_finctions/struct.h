@@ -53,11 +53,11 @@ struct node_time
     }
     unsigned long get_time_std()
     {
-        return time_std_;
+        return static_cast<unsigned long>(time_std_);
     }
     unsigned long get_time_NNU9()
     {
-        return time_NNU9_;
+        return static_cast<unsigned long>(time_NNU9_);
     }
     std::string get_name()
     {
