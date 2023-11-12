@@ -625,49 +625,56 @@ int main(int argc, char* argv[])
             {
                 deb_now:
                 int size_col = 1900;
-                int size_row = 1050;
-                cv::Mat plot = cv::Mat::zeros(size_row, size_col, CV_8UC3);
+                int size_row = 750;
                 unsigned int start = static_cast<int>(nt_size);
                 unsigned int end = static_cast<int>(nt_size);
                 unsigned int sz = 0;
-                unsigned int step = 10;
-                
-                std::cout << "Choose diagrams(pages 0-" << (nt_size - 1) / step << "): ";
-                std::cin >> sz;
-                start = step * sz;
-                end = start + step;
-
-
-                for (unsigned int i = 0, ii = start; i < end - start && ii < nt_size - 2; ++i, ++ii)
+                unsigned int step = 70;
+                unsigned int obj_by_pg = 10;
+                while (true)
                 {
-                    for (int j = 0; j < 2; j++)
+                    system("cls");
+                    cv::Mat plot = cv::Mat::zeros(size_row, size_col, CV_8UC3);
+
+                    std::cout << "Choose diagrams(pages 1-" << (nt_size - 1) / obj_by_pg + 1 << "): ";
+                    std::cin >> sz;
+                    if (sz == 0)
+                        goto home;
+
+                    --sz;
+                    start = obj_by_pg * sz;
+                    end = start + obj_by_pg;
+                
+                    for (unsigned int i = 0, ii = start; i < end - start && ii < nt_size - 2; ++i, ++ii)
                     {
-                        int bar_height = 0;
-                        
-                        // ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
-                        switch (j)  // NOLINT(hicpp-multiway-paths-covered)
+                        for (int j = 0; j < 2; j++)
                         {
-                        case 0:
+                            int bar_height = 0;
+                        
+                            // ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
+                            switch (j)  // NOLINT(hicpp-multiway-paths-covered)
                             {
-                                bar_height = static_cast<int>(nt[ii].get_time_std() / 1000);
-                                cv::rectangle(plot, cv::Point(50, i*100 + 50), cv::Point(50 + bar_height, i*100 + 60), cv::Scalar(255, 0, 0), -1);
-                                cv::putText(plot, nt[ii].get_name() + " for std:: = " + std::to_string(nt[ii].get_time_std()), cv::Point(50, i*100 + 70), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
-                                break;
-                            }
-                        case 1:
-                            {
-                                bar_height = static_cast<int>(nt[ii].get_time_NNU9() / 1000);
-                                cv::rectangle(plot, cv::Point(50, i*100 + 100), cv::Point(50 + bar_height, i*100 + 110), cv::Scalar(255, 255, 0), -1);
-                                cv::putText(plot, nt[ii].get_name() + " for NNU9:: = " + std::to_string(nt[ii].get_time_NNU9()), cv::Point(50, i*100 + 120), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
-                                break;
+                            case 0:
+                                {
+                                    bar_height = static_cast<int>(nt[ii].get_time_std() / 1000);
+                                    cv::rectangle(plot, cv::Point(50, i*step + 25), cv::Point(50 + bar_height, i*step + 35), cv::Scalar(255, 0, 0), -1);
+                                    cv::putText(plot, nt[ii].get_name() + " for std:: = " + std::to_string(nt[ii].get_time_std()), cv::Point(50, i*step + 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    bar_height = static_cast<int>(nt[ii].get_time_NNU9() / 1000);
+                                    cv::rectangle(plot, cv::Point(50, i*step + 55), cv::Point(50 + bar_height, i*step + 65), cv::Scalar(255, 255, 0), -1);
+                                    cv::putText(plot, nt[ii].get_name() + " for NNU9:: = " + std::to_string(nt[ii].get_time_NNU9()), cv::Point(50, i*step + 80), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255), 1, cv::LINE_AA);
+                                    break;
+                                }
                             }
                         }
                     }
+                    cv::imshow("Function Speed Comparison", plot);
+                    cv::waitKey(0);
+                    system("exit");
                 }
-                cv::imshow("Function Speed Comparison", plot);
-                cv::waitKey(0);
-                system("exit");
-                break;
             }
         case 7:
             delete[] init_arr;
