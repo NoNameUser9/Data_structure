@@ -103,6 +103,8 @@ namespace NNU9
             --arr_;
             ++max_size_;
             arr_[0] = value;
+            ++size_;
+            return;
         }
 
         if (incremented_times_ == 0)
@@ -114,7 +116,11 @@ namespace NNU9
             alloc_.deallocate(arr_);
             arr_ = alloc_.allocate(max_size_for_all_);
             max_size_ = max_size_for_all_;
-            
+
+            if (max_size_ - size_ > 50)
+                for (unsigned int j = 0; j < 50; ++j, --max_size_, ++arr_)
+                    ++incremented_times_;
+                
             for (size_t i = 0; i < size_; ++i)
                 arr_[i + 1] = temp[i];
             arr_[0] = value;
@@ -224,9 +230,18 @@ namespace NNU9
     template <typename T, class Allocator>
     void deque<T, Allocator>::clear()
     {
-        alloc_.deallocate(arr_);
-        arr_ = alloc_.allocate(max_size_);
-        size_ = 0;
+        if (incremented_times_ > 0)
+            while (incremented_times_ != 0)
+            {
+                --incremented_times_;
+                --arr_;
+            }
+        else
+        {
+            alloc_.deallocate(arr_);
+            arr_ = alloc_.allocate(max_size_);
+            size_ = 0;
+        }
     }
 
     template <class T, class  Allocator>

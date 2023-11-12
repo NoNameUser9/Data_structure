@@ -6,16 +6,36 @@
 struct sort_type
 {
     // ReSharper disable StringLiteralTypo
-    inline static std::string deque_puf = "deque.push_front;";
-    inline static std::string deque_pf = "deque.pop_front;";
+    inline static std::string stack_pub = "stack.push_back;";
+    inline static std::string stack_sz = "stack.size;";
+    inline static std::string stack_pb = "stack.pop_back;";
+    inline static std::string stack_top = "stack.top;";
+    
+    inline static std::string queue_pub = "queue.push_back;";
+    inline static std::string queue_pf = "queue.pop_front;";
+    inline static std::string queue_sz = "queue.size;";
+    inline static std::string queue_f = "queue.front;";
+    inline static std::string queue_b = "queue.back;";
+    
     inline static std::string deque_pub = "deque.push_back;";
+    inline static std::string deque_puf = "deque.push_front;";
     inline static std::string deque_pb = "deque.pop_back;";
+    inline static std::string deque_pf = "deque.pop_front;";
+    inline static std::string deque_sz = "deque.size;";
+    inline static std::string deque_f = "deque.front;";
+    inline static std::string deque_b = "deque.back;";
+    inline static std::string deque_cl = "deque.clear;";
+    
     inline static std::string list_puf = "list.push_front;";
-    inline static std::string list_pb = "list.merge;";
+    inline static std::string list_ins_aft = "list.insert_after;";
+    inline static std::string list_pf = "list.pop_front;";
     inline static std::string list_sort = "list.sort;";
     inline static std::string list_merge = "list.merge;";
-    inline static std::string list_ins_aft = "list.insert_after;";
     inline static std::string list_u = "list.unique;";
+    inline static std::string list_b = "list.back;";
+    inline static std::string list_f = "list.front;";
+    inline static std::string list_cl = "list.clear;";
+    
     inline static std::string binary_search = "binary_search;";
     // ReSharper restore StringLiteralTypo
     std::string get_name()

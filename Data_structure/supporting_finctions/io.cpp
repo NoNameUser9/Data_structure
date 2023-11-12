@@ -8,7 +8,7 @@ void write_vec(node_time* vec, Table& table, const std::string& path)
     for (size_t i = 1; i < table.row_size() - 1; ++i)
     {
         size_t j = 0;
-        for (; j < 10; ++j)
+        for (; j < table.row_size(); ++j)
             if (vec[j].get_name() == table.at(i, 0))
                 break;
         
