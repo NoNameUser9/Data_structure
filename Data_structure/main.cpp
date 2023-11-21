@@ -1,3 +1,7 @@
+#define VER "1.5.0"
+// #define SIZE_U 1000000
+// #define DEBUG
+
 // ReSharper disable CppClangTidyConcurrencyMtUnsafe
 // ReSharper disable CppClangTidyClangDiagnosticUnusedLabel
 // ReSharper disable CppClangTidyCppcoreguidelinesAvoidGoto
@@ -7,19 +11,18 @@
 #include <stack>
 #include <windows.h>
 #include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+// #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-// #define DEBUG
 
-#define VER "1.5.0"
-
-#include "binary_tree/binary_search.hpp"
+// #include "binary_tree/binary_search.hpp"
+// #define DEQ_SIZE_U 1000000
+// #include "allocator.hpp"
 #include "binary_tree/binary_tree.h"
 #include "deque_generic/deque.hpp"
 #include "deque_generic/queue.hpp"
 #include "deque_generic/stack.hpp"
 #include "list/forward_list.hpp"
-#include "supporting_finctions/bynary_tree_draw.h"
+#include "supporting_finctions\bynary_tree_draw.hpp"
 #include "supporting_finctions/io.h"
 #include "supporting_finctions/struct.h"
 #include "supporting_finctions/time.hpp"
@@ -30,7 +33,8 @@ const std::string path = "C:\\Users\\User\\Documents\\Data_structure.csv";
 const size_t nt_size = 27;
 const auto nt = new node_time[nt_size];
 Table table(nt_size, 3);
-
+BinaryTree<my_type> tree;
+bool tree_init = false;
 int main(int argc, char* argv[])
 {
     NNU9::time t;
@@ -47,8 +51,8 @@ int main(int argc, char* argv[])
     
     srand(time(NULL));
     size_t t_s = rand()%10;
-    while (t_s < 2000)
-        t_s = rand()%5000;
+    while (t_s < SIZE/10000 / 2)
+        t_s = rand()/400%SIZE;
  
     const size_t size = t_s;
     auto init_arr = new my_type[size];
@@ -88,8 +92,15 @@ int main(int argc, char* argv[])
                 NNU9::stack<my_type> stack;
                 // stack.push;
                 t.start();
-                for (size_t i = 0; i < size; ++i)
-                    stack.push(init_arr[i]);
+                try
+                {
+                    for (size_t i = 0; i < size; ++i)
+                        stack.push(init_arr[i]);
+                }
+                catch (std::exception& ex)
+                {
+                    std::cerr << ex.what();
+                }
                 t.end();
                 std::cout << "\ntime NNU9::stack.push_back() for " << stack.size() << " elements: " << t.difference() << '\n';
                 nt[ntn] = sort_type::stack_pub;
@@ -495,7 +506,7 @@ int main(int argc, char* argv[])
                         std::cout << "\nsize: " << list.size() << "\n";
                         std::cout << "\nback: " << list.back() << "\n\n";
 
-                        list.print_list();
+                        // list.print_list();
                         std::cout << '\n';
                         t.start();
                         list.unique();
@@ -604,21 +615,71 @@ int main(int argc, char* argv[])
         case 5:
             {
                 ntn = 24;
-                BinaryTree<my_type> tree;
-                tree = tree.create_balanced_tree(init_arr, 0, size);
-                Node<my_type>* root = tree.get_root();
-    
-                // Создание изображения
-                cv::Mat image(1000, 2500, CV_8UC3, cv::Scalar(255, 255, 255));
-    
-                // Отображение бинарного дерева
-                drawBinaryTree(image, root, 1250, 50, 0, size);
-    
-                // Отображение изображения
-                cv::imshow("Binary Tree", image);
-                cv::waitKey(0);
 
-                system("pause");
+                if (!tree_init)
+                {
+                    tree = tree.create_balanced_tree(init_arr, 0, size);
+                    tree_init = true;
+                }
+                
+                Node<my_type>* root = tree.get_root();
+                
+                std::cout << "1.search\n"
+                             "2.insert\n"
+                             "3.show\n";
+
+                int num = 0;
+                
+                unsigned int bin_sw = 0;
+
+                std::cin >> bin_sw;
+                // tree.insert(100);
+                switch (bin_sw)
+                {
+                case 1:
+                    {
+                        std::cout << "Enter element for search: ";
+                        std::cin >> num;
+                        tree.sortBinaryTree(tree.get_root());
+                        t.start();
+                        bool searched = tree.search(num);
+                        t.end();
+                        nt[ntn] = sort_type::binary_search;
+                        nt[ntn++].set_time_NNU9(t.difference());
+                        std::cout << "searched: " << searched << "\n";
+                        system("pause");
+                        break;
+                    }
+                case 2:
+                    {
+                        int ins = 0;
+                        std::cout << "Enter number for insertion: ";
+                        std::cin >> ins;
+                        tree.insert(ins);
+                        system("pause");
+                        break;
+                    }
+                case 3:
+                    {
+                        // Создание изображения
+                        cv::Mat image(1000, 2500, CV_8UC3, cv::Scalar(255, 255, 255));
+    
+                        // Отображение бинарного дерева
+                        drawBinaryTree(image, root, 800, 50, 0, size);
+    
+                        // Отображение изображения
+                        cv::imshow("Binary Tree", image);
+                        cv::waitKey(0);
+
+                        system("pause");
+                        break;
+                    }
+                default:
+                    {
+                        goto home;
+                    }
+                }
+                
                 break;
             }
         case 6:

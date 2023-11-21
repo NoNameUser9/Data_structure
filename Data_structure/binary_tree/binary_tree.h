@@ -1,5 +1,11 @@
 ﻿#pragma once
 #include <iostream>
+#include <vector>
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iostream>
+#include <string_view>
 
 template<class T>
 struct Node
@@ -117,6 +123,46 @@ public:
     {
         return searchRecursive(root, value);
     }
+    // Собрать значения из дерева в порядке ин-порядка (левое поддерево -> узел -> правое поддерево)
+    void inorderTraversal(Node<T>* currentNode, std::vector<int>& values) {
+        if (currentNode == nullptr) {
+            return;
+        }
+        inorderTraversal(currentNode->left, values);
+        values.push_back(currentNode->data);
+        inorderTraversal(currentNode->right, values);
+    }
+
+    // Сортировка значений в узлах бинарного дерева
+    void sortBinaryTree(Node<T>* root) {
+        std::vector<int> values;
+    
+        // Собираем значения дерева в массиве в порядке ин-порядка
+        inorderTraversal(root, values);
+    
+        // Сортируем значения
+        std::sort(values.begin(), values.end());
+    
+        // Перезаписываем отсортированные значения обратно в узлы дерева
+        size_t index = 0;
+        inorderOverwrite(root, values, index);
+    }
+
+    // Перезаписать отсортированные значения обратно в узлы дерева
+    void inorderOverwrite(Node<T>* currentNode, const std::vector<int>& values, size_t& index) {
+        if (currentNode == nullptr) {
+            return;
+        }
+    
+        // Перезаписываем значения в левом поддереве
+        inorderOverwrite(currentNode->left, values, index);
+    
+        // Записываем отсортированное значение обратно в узел
+        currentNode->data = values[index++];
+    
+        // Перезаписываем значения в правом поддереве
+        inorderOverwrite(currentNode->right, values, index);
+    }
 
 private:
     Node<T>* cloneTree(Node<T>* node)
@@ -131,13 +177,24 @@ private:
     }
     bool searchRecursive(Node<T>* currentNode, int value)
     {
-        if (currentNode == nullptr)
+        // Базовый случай: если текущий узел равен nullptr, возвращаем false
+        if (currentNode == nullptr) {
             return false;
-        if (currentNode->data == value)
+        }
+    
+        // Если значение узла совпадает с искомым значением, возвращаем true
+        if (currentNode->data == value) {
             return true;
-        if (value < currentNode->data)
+        }
+    
+        // Если искомое значение меньше значения текущего узла, рекурсивно ищем в левом поддереве
+        if (value < currentNode->data) {
             return searchRecursive(currentNode->left, value);
-        return searchRecursive(currentNode->right, value);
+        }
+        // Иначе рекурсивно ищем в правом поддереве
+        else {
+            return searchRecursive(currentNode->right, value);
+        }
     }
     Node<T>* root;
 };

@@ -18,7 +18,7 @@ void drawBinaryTree(cv::Mat& image, Node<my_type>* node, const unsigned int x, c
     for (size_t i = 1; i < size;)
         i *= ++xs;
     
-    double scaleX = std::pow(3,xs);
+    double scaleX = std::pow(2.5,xs);
     // Отображение текущего узла
     const cv::Point center(static_cast<int>(x), static_cast<int>(y));
     

@@ -1,5 +1,6 @@
 ﻿#include "stack.hpp"
 #include <iostream>
+#include <string>
 
 namespace NNU9
 {
@@ -26,7 +27,7 @@ namespace NNU9
     void stack<T, Container>::push(const_ref value)
     {
         if(container_.max_size() == container_.size())
-            throw std::runtime_error("\nStack is full!\n");
+            throw std::runtime_error("\nStack is full!(size: " + std::to_string(container_.size()) + ")\n");
         
         container_.push_back(value);
     }

@@ -100,7 +100,7 @@
     <ClInclude Include="deque_generic\queue.hpp" />
     <ClInclude Include="deque_generic\stack.hpp" />
     <ClInclude Include="list\forward_list.hpp" />
-    <ClInclude Include="supporting_finctions\bynary_tree_draw.h" />
+    <ClInclude Include="supporting_finctions\bynary_tree_draw.hpp" />
     <ClInclude Include="supporting_finctions\io.h" />
     <ClInclude Include="supporting_finctions\shell_sort.hpp" />
     <ClInclude Include="supporting_finctions\struct.h" />

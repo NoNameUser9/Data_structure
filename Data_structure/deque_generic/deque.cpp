@@ -1,4 +1,5 @@
-﻿#include "deque.hpp"
+﻿#include "../allocator.hpp"
+#include "deque.hpp"
 #include "../supporting_finctions/swap.hpp"
 #include <iostream>
 

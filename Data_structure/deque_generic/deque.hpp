@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <initializer_list>
-
 #include "../allocator.hpp"
 
 namespace NNU9
